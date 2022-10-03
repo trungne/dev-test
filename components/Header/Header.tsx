@@ -9,6 +9,7 @@ import Phone from "components/icons/Phone";
 import { Divider } from '@mantine/core'
 import PinDrop from "components/icons/PinDrop";
 import Email from "components/icons/Email";
+import Link from "next/link";
 const MOBILE_LOGO_URL = `${CDN_HOST}cb_logo.png`
 
 const BACKGROUND_IMAGE = `${CDN_HOST}background_header_${isMobile ? "mobile" : "pc"}.png`
@@ -58,20 +59,20 @@ const Menu: React.FC = React.memo(() => {
     return (
         <div className="flex bg-neutral py-5 justify-around">
             <UCarIcon />
-            <div className="flex gap-12">
-                <UnstyledButton className="bg-transparent text-base text-white">
-                    New Cars
-                </UnstyledButton>
-                <UnstyledButton className="bg-transparent text-base text-white">
-                    Used Cars
-                </UnstyledButton>
-                <UnstyledButton className="bg-transparent text-base text-white">
-                    Reviews
-                </UnstyledButton>
-                <UnstyledButton className="bg-transparent text-base text-white">
-                    News
-                </UnstyledButton>
-            </div>
+            <nav className="flex items-center gap-12">
+                <Link href={'/new'} passHref>
+                    <a className="bg-transparent text-base text-white cursor-pointer">New Cars</a>
+                </Link>
+                <Link href={'/used'} passHref>
+                    <a className="bg-transparent text-base text-white cursor-pointer">Used Cars</a>
+                </Link>
+                <Link href={'/review'} passHref>
+                    <a className="bg-transparent text-base text-white cursor-pointer">Review Cars</a>
+                </Link>
+                <Link href={'/news'} passHref>
+                    <a className="bg-transparent text-base text-white cursor-pointer">News</a>
+                </Link>
+            </nav>
 
             <UnstyledButton className="bg-carbuyer-primary font-semibold text-white 
                     text-base leading-5 py-3 px-16 rounded">
@@ -84,24 +85,24 @@ Menu.displayName = 'Menu'
 
 const PCHeader: React.FC = React.memo(() => {
     return (
-        <div className="hidden md:block">
+        <header className="hidden md:block">
             <Address />
             <Menu />
-        </div>
+        </header>
     )
 })
 PCHeader.displayName = 'PCHeader'
 
 const MobileHeader: React.FC = React.memo(() => {
     return (
-        <div className="py-3 px-4 md:hidden flex justify-between items-center">
+        <header className="py-3 px-4 md:hidden flex justify-between items-center">
             <Image
                 width={120}
                 height={40}
                 alt="Car Buyer logo" src={MOBILE_LOGO_URL} />
 
             <SearchIcon />
-        </div>
+        </header>
     )
 })
 
