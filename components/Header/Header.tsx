@@ -3,22 +3,112 @@ import Image from "next/image";
 import { CDN_HOST } from "shared/constants";
 import SearchIcon from "components/icons/SearchIcon";
 import { isMobile } from "react-device-detect"
-
+import UCarIcon from "components/icons/UCarIcon";
+import UnstyledButton from "components/Common/UnstyledButton";
+import Phone from "components/icons/Phone";
+import { Divider } from '@mantine/core'
+import PinDrop from "components/icons/PinDrop";
+import Email from "components/icons/Email";
 const MOBILE_LOGO_URL = `${CDN_HOST}cb_logo.png`
 
 const BACKGROUND_IMAGE = `${CDN_HOST}background_header_${isMobile ? "mobile" : "pc"}.png`
+
+const Address: React.FC = () => {
+    return <div className="flex justify-between px-[60px] py-4">
+        <div className="flex gap-6">
+            <div className="flex whitespace-pre-line my-1">
+                <PinDrop />
+                <div className="ml-2 text-xs">
+                    71 Ayer Rajah Crescent, #06-14,
+                    {'\n'}
+                    Singapore 139951
+                </div>
+            </div>
+            <Divider orientation="vertical" />
+            <div className="flex my-1">
+                <Email />
+                <div className="ml-2 text-xs">
+                    <div>
+                        Email us at:
+                    </div>
+                    <div>
+                        hello@carbuyer.com.sg
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div className="flex">
+            <Phone />
+            <div className="ml-2">
+                <div className="text-sm font-semibold">
+                    +65 8808 7905
+                </div>
+                <div className="text-sm font-semibold">
+                    +7 (700) 51 51 518
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+const Menu: React.FC = () => {
+    return (
+        <div className="flex bg-neutral py-5 justify-around">
+            <UCarIcon />
+            <div className="flex gap-12">
+                <UnstyledButton className="bg-transparent text-base text-white">
+                    New Cars
+                </UnstyledButton>
+                <UnstyledButton className="bg-transparent text-base text-white">
+                    Used Cars
+                </UnstyledButton>
+                <UnstyledButton className="bg-transparent text-base text-white">
+                    Reviews
+                </UnstyledButton>
+                <UnstyledButton className="bg-transparent text-base text-white">
+                    News
+                </UnstyledButton>
+            </div>
+
+            <UnstyledButton className="bg-carbuyer-primary font-semibold text-white 
+                    text-base leading-5 py-3 px-16 rounded">
+                Login
+            </UnstyledButton>
+        </div>
+    )
+}
+
+const PCHeader: React.FC = () => {
+    return (
+        <div className="hidden md:block">
+            <Address />
+            <Menu />
+        </div>
+    )
+}
+
+const MobileHeader: React.FC = () => {
+    return (
+        <div className="py-3 px-4 md:hidden flex justify-between items-center">
+            <Image
+                width={120}
+                height={40}
+                alt="Car Buyer logo" src={MOBILE_LOGO_URL} />
+
+            <SearchIcon />
+        </div>
+    )
+}
+
 const Header: React.FC = () => {
     return (
         <div>
-            <div className="py-3 px-4 md:hidden flex justify-between items-center">
-                <Image
-                    width={120}
-                    height={40}
-                    alt="Car Buyer logo" src={MOBILE_LOGO_URL} />
 
-                <SearchIcon />
-            </div>
-            <div className="mt-2 relative">
+            <MobileHeader />
+            <PCHeader />
+            <div className="mt-2 md:mt-0 relative">
                 <div className="absolute px-3 md:px-0 w-full top-0 left-0 z-[-1]">
                     <div className="relative aspect-[343/142]">
                         <Image
@@ -46,13 +136,13 @@ const Header: React.FC = () => {
                         </div>
                     </div>
 
-                    <button className="bg-[#EE1B24] font-['Poppins'] font-semibold text-white 
+                    <UnstyledButton className="bg-carbuyer-primary font-['Poppins'] font-semibold text-white 
                     text-[10px] md:text-[18px] 
                     py-[6px] md:py-3
                     px-4 md:px-12
                     mt-3 border-0 rounded">
                         Get Started
-                    </button>
+                    </UnstyledButton>
                 </div>
 
             </div>
