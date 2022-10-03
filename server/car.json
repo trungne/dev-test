@@ -1,0 +1,72 @@
+[
+    {
+        "name": "BMW X3",
+        "totalPrice": 248000,
+        "pricePerMonth": 2302,
+        "variants": 4,
+        "withCOE": true,
+        "brandLogo": "https://d234qyqqy4qdru.cloudfront.net/bmw_logo.png",
+        "brandName": "Performance Motors",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/bmw_x3.png"
+    },
+    {
+        "name": "Alpine A110",
+        "totalPrice": 2487800,
+        "pricePerMonth": 2302,
+        "variants": 3,
+        "withCOE": true,
+        "brandLogo": "https://d234qyqqy4qdru.cloudfront.net/alpine_logo.png",
+        "brandName": "Wearnes Automotive",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/alpine_a110.png"
+    },
+    {
+        "name": "Aston Martin DBS Superlegend",
+        "totalPrice": null,
+        "pricePerMonth": 2302,
+        "variants": 1,
+        "withCOE": false,
+        "brandLogo": "https://d234qyqqy4qdru.cloudfront.net/aston_martin_logo.png",
+        "brandName": "Wearnes Automotive",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/aston_dbs.png"
+    },
+    {
+        "name": "Alfa Romeo Stelvio",
+        "totalPrice": 278000,
+        "pricePerMonth": 2302,
+        "variants": 3,
+        "withCOE": true,
+        "brandLogo": "https://d234qyqqy4qdru.cloudfront.net/bmw_logo.png",
+        "brandName": "EuroAutomobile",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/alfa.png"
+    },
+    {
+        "name": "Aston Martin DB11 Volante",
+        "totalPrice": null,
+        "pricePerMonth": 2302,
+        "variants": 1,
+        "withCOE": false,
+        "brandLogo": "https://d234qyqqy4qdru.cloudfront.net/aston_martin_logo.png",
+        "brandName": "Wearnes Automotive ",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/aston_db11a_volante.png"
+    },
+    {
+        "name": "Aston Martin DB11",
+        "totalPrice": 799000,
+        "pricePerMonth": 2302,
+        "variants": 1,
+        "withCOE": false,
+        "brandLogo": "https://d234qyqqy4qdru.cloudfront.net/aston_martin_logo.png",
+        "brandName": "Wearnes Automotive ",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/aston_db11.png"
+    },
+    {
+        "name": "Aston Martin DB11",
+        "totalPrice": 799000,
+        "pricePerMonth": 2302,
+        "variants": 1,
+        "withCOE": false,
+        "brandLogo": "https://d234qyqqy4qdru.cloudfront.net/aston_martin_logo.png",
+        "brandName": "Wearnes Automotive ",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/aston_db11b_volante.png"
+    }
+]

@@ -4,19 +4,24 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import vehicleTypeJSON from 'components/SearchArea/vehicle-type.json'
+import CarList from 'components/CarList'
+import { CarInfo } from 'shared/types'
+import defaultCarData from 'server/car.json'
 
 type StaticProps = {
   vehicleTypes: Record<string, string>,
+  defaultCarData: CarInfo[]
 }
 export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   return {
     props: {
-      vehicleTypes: vehicleTypeJSON
-    }
+      vehicleTypes: vehicleTypeJSON,
+      defaultCarData: defaultCarData,
+    },
   }
 }
 
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicleTypes }) => {
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicleTypes, defaultCarData }) => {
   return (
     <div>
       <Head>
@@ -26,6 +31,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicl
       </Head>
       <Header />
       <SearchArea vehicleTypes={vehicleTypes} />
+      <CarList defaultCarData={defaultCarData} />
     </div>
   )
 }
