@@ -118,14 +118,14 @@ const Header: React.FC = () => {
             relative 
             mx-3 md:mx-0
             bg-cover bg-center
-            aspect-[343/142] md:aspect-[1366/529]
+            aspect-[343/142] lg:aspect-[1366/529]
             rounded md:rounded-none">
 
                 <div className="pt-4 md:pt-[100px] pl-5 md:pl-[108px] text-white font-['Poppins']" >
-                    <div className="font-semibold text-lg md:text-[60px] md:leading-[76px]">Car Marketplace</div>
-                    <div className="font-medium  w-[50%] 
+                    <div className="font-semibold text-lg lg:text-[60px] lg:leading-[76px]">Car Marketplace</div>
+                    <div className="font-medium w-[50%] 
                     mt-1 md:mt-4
-                    text-[6px] md:text-[18px] 
+                    text-[6px] sm:text-sm lg:text-[18px] 
                     text-neutral-4">
                         <div>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -136,8 +136,8 @@ const Header: React.FC = () => {
                     </div>
 
                     <UnstyledButton className="bg-carbuyer-primary font-['Poppins'] font-semibold text-white 
-                    text-[10px] md:text-[18px] 
-                    py-[6px] md:py-3
+                    text-[10px] sm:text-sm md:text-[18px] 
+                    py-[6px] lg:py-3
                     px-4 md:px-12
                     mt-3 border-0 rounded">
                         Get Started
