@@ -1,17 +1,246 @@
 import React from "react"
+import { Paper, Radio, NumberInput, Checkbox, Divider } from '@mantine/core';
+import { IconChevronDown } from '@tabler/icons';
+import styles from './styles.module.css'
+import { Popover } from '@mantine/core';
+import DollarSign from "components/icons/DollarSign";
+import UnstyledButton from "components/Common/UnstyledButton";
 
-const SearchArea: React.FC = () => {
-    return <div className="
-    px-3 md:px-[62px]
-    mt-6 md:mt-0
-    h-[500px]
-     bg-slate-500
+type SelectDataType = {
+    value: string,
+    label: string
+}
+const CarStateData: Record<string, string> = {
+    ['new-authorised']: "New Car (Authorised Dealer)",
+    ['new-parallel']: "New Car (Parallel Importer)",
+    ['used']: "Used Cars"
+}
+
+
+const MAX_PRICE = 100000000
+type Props = {
+    vehicleTypes: Record<string, string>
+}
+
+const CarStateInput: React.FC = () => {
+    const [carState, setCarState] = React.useState<SelectDataType['value']>('used');
+
+    return (
+        <Paper className="md:w-[290px]" shadow="xs">
+            <Popover classNames={{
+                dropdown: 'w-3/4 md:w-[330px]'
+            }} position="bottom" shadow="md">
+                <Popover.Target>
+                    <div className={styles['popover-target']}>
+                        <div className={styles['popover-target-title']}>New/Used</div>
+                        <div className={styles['popover-target-value']}>
+                            <div>{CarStateData[carState]}</div><IconChevronDown size={14} />
+                        </div>
+                    </div>
+                </Popover.Target>
+                <Popover.Dropdown>
+                    <Radio.Group
+                        onChange={setCarState}
+                        value={carState}
+                    >
+                        {Object.keys(CarStateData).map((key) => <Radio key={key} value={key} label={CarStateData[key]} />)}
+                    </Radio.Group>
+                </Popover.Dropdown>
+            </Popover>
+        </Paper>
+    )
+}
+
+const PriceRangeInput: React.FC = () => {
+    const [priceRange, setPriceRange] = React.useState<{ min: number, max: number }>({ min: 10000, max: 100000 })
+    const [opened, setOpened] = React.useState(false)
+    return (
+        <Paper className="md:w-[410px]" shadow="xs">
+            <Popover opened={opened} onChange={setOpened} classNames={{
+                dropdown: 'w-full md:w-[400px]'
+            }} position="bottom" shadow="md">
+                <Popover.Target>
+                    <div onClick={() => setOpened(o => !o)} className={styles['popover-target']}>
+                        <div className={styles['popover-target-title']}>Price Range</div>
+                        <div className={styles['popover-target-value']}>
+                            <div className="flex gap-4 items-center">
+                                <div className="text-neutral-7 text-sm leading-[15px] flex items-center gap-2">
+                                    <DollarSign /> <span>${priceRange.min}</span>
+                                </div>
+                                <div className="w-4 border-[0.5px] border-solid border-neutral-7"></div>
+                                <div className="text-neutral-7 text-sm leading-[15px] flex items-center gap-2">
+                                    <DollarSign /> <span>${priceRange.max}</span>
+                                </div>
+                            </div>
+
+                            <IconChevronDown size={14} />
+                        </div>
+                    </div>
+                </Popover.Target>
+                <Popover.Dropdown>
+                    <div className="rounded-md p-2">
+                        <div className={styles['popover-target-title']}>Price Range</div>
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="border border-solid border-neutral-4 py-2 px-4 rounded">
+                                <div className={styles['number-input-label']}>Min</div>
+                                <div className={styles['number-input-value-wrapper']}>
+                                    <span className={styles['number-input-value-currency']}>S$&nbsp;</span>
+                                    <NumberInput decimalSeparator="," defaultValue={priceRange.min} classNames={{
+                                        input: styles['number-input-value']
+                                    }} hideControls
+                                        max={MAX_PRICE}
+                                        min={0}
+                                        value={priceRange.min}
+                                        onChange={(val) => setPriceRange(prev => {
+                                            return {
+                                                ...prev,
+                                                min: val ?? 0
+                                            }
+                                        })}
+                                    />
+
+                                </div>
+                            </div>
+                            <div className="w-2 border-solid border-[0.4px] border-neutral-8"></div>
+                            <div className="border border-solid border-neutral-4 py-2 px-4 rounded">
+                                <div className={styles['number-input-label']}>Max</div>
+                                <div className={styles['number-input-value-wrapper']}>
+                                    <span className={styles['number-input-value-currency']}>S$&nbsp;</span>
+
+                                    <NumberInput decimalSeparator="," defaultValue={priceRange.max} classNames={{
+                                        input: styles['number-input-value']
+                                    }} hideControls
+                                        max={MAX_PRICE}
+                                        min={0}
+                                        value={priceRange.max}
+                                        onChange={(val) => setPriceRange(prev => {
+                                            return {
+                                                ...prev,
+                                                max: val ?? 0
+                                            }
+                                        })}
+                                    //TODO: add parser
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <Divider />
+                        <div className="flex justify-between mt-6">
+                            <UnstyledButton onClick={() => {
+                                setPriceRange({ min: 0, max: 0 })
+                                setOpened(false)
+                            }} className={styles['clear-button']}>Clear</UnstyledButton>
+                            <UnstyledButton onClick={() => { setOpened(false) }} className={styles['save-button']}>Save</UnstyledButton>
+                        </div>
+                    </div>
+                </Popover.Dropdown>
+            </Popover>
+        </Paper>
+    )
+}
+
+const VehicleTypeInput: React.FC<Props> = ({ vehicleTypes }) => {
+    const [selectedVehicleTypes, setSelectedVehicleTypes] = React.useState<string[]>([])
+    const [opened, setOpened] = React.useState(false)
+
+    return (
+        <Paper className="md:w-[290px]" shadow="xs">
+            <Popover opened={opened} onChange={setOpened} classNames={{
+                dropdown: 'w-full md:w-[475px]'
+            }} position="bottom" shadow="md">
+                <Popover.Target>
+                    <div onClick={() => { setOpened(o => !o) }} className={styles['popover-target']}>
+                        <div className={styles['popover-target-title']}>Vehicle Type</div>
+                        <div className={styles['popover-target-value'] + " min-h-[16px]"}>
+                            <div>
+                                {selectedVehicleTypes.length > 3 ?
+                                    <div className="text-neutral-7 text-sm">+{selectedVehicleTypes.length} more</div> :
+                                    selectedVehicleTypes.map((key, idx, arr) => {
+                                        if (idx === arr.length - 1) {
+                                            return <span key={key}>{vehicleTypes[key]}</span>
+                                        }
+                                        else {
+                                            return <span key={key}>{vehicleTypes[key]}, </span>
+                                        }
+                                    })}
+
+                            </div>
+                            <IconChevronDown size={14} />
+                        </div>
+                    </div>
+                </Popover.Target>
+                <Popover.Dropdown>
+                    <div className="rounded-md p-2">
+                        <div className={styles['popover-target-title']}>Vehicle Type</div>
+                        <Checkbox.Group
+                            defaultValue={['react']}
+                            classNames={{ root: 'flex mb-6 w-full' }}
+                            value={selectedVehicleTypes}
+                            onChange={setSelectedVehicleTypes}
+                        >
+                            <div className="w-full grid grid-cols-3 grid-flow-row">
+                                {Object.keys(vehicleTypes).sort().map((key, idx) => <Checkbox key={key} value={key} label={vehicleTypes[key]} />
+                                )}
+                            </div>
+                        </Checkbox.Group>
+
+                        <Divider />
+                        <div className="flex justify-between mt-6">
+                            <UnstyledButton onClick={() => {
+                                setSelectedVehicleTypes([])
+                                setOpened(false)
+                            }} className={styles['clear-button']}>Clear</UnstyledButton>
+                            <UnstyledButton onClick={() => {
+                                setOpened(false)
+                            }} className={styles['save-button']}>Save</UnstyledButton>
+                        </div>
+
+
+                    </div>
+                </Popover.Dropdown>
+            </Popover>
+        </Paper>
+    )
+}
+
+const SearchArea: React.FC<Props> = ({ vehicleTypes }) => {
+    return (
+        <div className="md:relative md:flex md:justify-center">
+            <div className="
+                md:absolute
+        
+                md:top-[-30px]
+                lg:top-[-50px]
+                mx-3 md:mx-0
+                mt-6 md:mt-0
+                block md:flex
+                sm:grow
+                sm:max-w-2xl
+                md:max-w-4xl
+                lg:max-w-6xl
+                p-2 md:p-0
+                md:pr-10
+                border-[1px]
+                border-neutral-3
+                border-solid
+                rounded-[6px]
+                bg-white
     ">
-        <div>
-
+                <CarStateInput />
+                <PriceRangeInput />
+                <VehicleTypeInput vehicleTypes={vehicleTypes} />
+                <UnstyledButton className="bg-carbuyer-primary text-white text-base leading-5 
+            w-full md:w-auto
+            
+            py-5 
+            md:self-center
+            md:px-11
+            md:ml-24
+            rounded-md font-bold">Search</UnstyledButton>
+            </div>
         </div>
 
-    </div>
+    )
 }
 
 export default React.memo(SearchArea)

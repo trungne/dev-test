@@ -2,8 +2,21 @@ import Header from 'components/Header'
 import SearchArea from 'components/SearchArea'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import vehicleTypeJSON from 'components/SearchArea/vehicle-type.json'
 
-const Home: NextPage = () => {
+type StaticProps = {
+  vehicleTypes: Record<string, string>,
+}
+export const getStaticProps: GetStaticProps<StaticProps> = async () => {
+  return {
+    props: {
+      vehicleTypes: vehicleTypeJSON
+    }
+  }
+}
+
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicleTypes }) => {
   return (
     <div>
       <Head>
@@ -12,7 +25,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <SearchArea />
+      <SearchArea vehicleTypes={vehicleTypes} />
     </div>
   )
 }

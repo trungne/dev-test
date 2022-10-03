@@ -7,7 +7,7 @@
 }
 
 .popover-target-value {
-    @apply flex items-center justify-between mt-4
+    @apply flex items-center justify-between mt-4 text-sm leading-4 font-normal text-neutral-7
 }
 
 .number-input-label {
@@ -24,4 +24,12 @@
 
 .number-input-value {
     @apply border-0 p-0 text-sm font-normal leading-6 h-[22px] min-h-0
+}
+
+.clear-button {
+    @apply bg-transparent text-neutral-5 py-2 text-base
+}
+
+.save-button {
+    @apply bg-carbuyer-primary text-white text-base py-2 px-4 rounded
 }
