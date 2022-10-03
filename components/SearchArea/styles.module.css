@@ -1,0 +1,27 @@
+.popover-target {
+    @apply pt-1 md:pt-6 pl-4 md:pl-10 pr-4 md:pr-10 pb-6 md:pb-10
+}
+
+.popover-target-title {
+    @apply font-bold flex items-center w-full h-[55px] md:h-[40px] text-base
+}
+
+.popover-target-value {
+    @apply flex items-center justify-between mt-4
+}
+
+.number-input-label {
+    @apply text-neutral-6 text-xs leading-5 mb-1
+}
+
+.number-input-value-wrapper {
+    @apply flex items-center
+}
+
+.number-input-value-currency {
+    @apply text-sm font-normal
+}
+
+.number-input-value {
+    @apply border-0 p-0 text-sm font-normal leading-6 h-[22px] min-h-0
+}
