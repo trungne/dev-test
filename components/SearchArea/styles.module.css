@@ -3,11 +3,11 @@
 }
 
 .popover-target-title {
-    @apply font-bold flex items-center w-full h-[55px] md:h-[40px] text-base
+    @apply font-bold flex items-center w-full h-[55px] md:h-[40px] text-base 
 }
 
 .popover-target-value {
-    @apply flex items-center justify-between mt-4 text-sm leading-4 font-normal text-neutral-7
+    @apply flex items-center justify-between mt-4 text-sm leading-4 font-normal text-neutral-7 whitespace-nowrap overflow-hidden text-ellipsis
 }
 
 .number-input-label {

@@ -34,7 +34,7 @@ const CarStateInput: React.FC = () => {
                     <div className={styles['popover-target']}>
                         <div className={styles['popover-target-title']}>New/Used</div>
                         <div className={styles['popover-target-value']}>
-                            <div>{CarStateData[carState]}</div><IconChevronDown size={14} />
+                            {CarStateData[carState]}<IconChevronDown size={14} />
                         </div>
                     </div>
                 </Popover.Target>
@@ -179,7 +179,7 @@ const VehicleTypeInput: React.FC<Props> = ({ vehicleTypes }) => {
                             onChange={setSelectedVehicleTypes}
                         >
                             <div className="w-full grid grid-cols-3 grid-flow-row">
-                                {Object.keys(vehicleTypes).sort().map((key, idx) => <Checkbox key={key} value={key} label={vehicleTypes[key]} />
+                                {Object.keys(vehicleTypes).sort().map((key) => <Checkbox key={key} value={key} label={vehicleTypes[key]} />
                                 )}
                             </div>
                         </Checkbox.Group>
