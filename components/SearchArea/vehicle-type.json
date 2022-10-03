@@ -1,0 +1,17 @@
+{
+    "bus": "Bus",
+    "classic-car": "Classic Car",
+    "couple": "Couple",
+    "convertible": "Convertible",
+    "hatchback": "Hatchback",
+    "lorry": "Lorry",
+    "mpv": "MPV",
+    "pickup": "Pickup",
+    "sedan": "Sedan",
+    "sport-car": "Sport Car",
+    "suv": "SUV",
+    "truck": "Truck",
+    "van-passenger": "Van (Passenger)",
+    "van-goods": "Van (Goods)",
+    "wagon": "Wagon"
+}
