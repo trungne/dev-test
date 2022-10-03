@@ -5,7 +5,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        neutral: '#232323',
+        ['carbuyer-primary']: '#EE1B24',
+      }
+    },
   },
   plugins: [],
 }
