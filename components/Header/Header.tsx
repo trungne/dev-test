@@ -112,26 +112,21 @@ const Header: React.FC = () => {
         <div>
             <MobileHeader />
             <PCHeader />
-            <div className="mt-2 md:mt-0 relative">
-                <div className="absolute px-3 md:px-0 w-full top-0 left-0 z-[-1]">
-                    <div className="relative aspect-[343/142]">
-                        <Image
-                            loading="lazy"
-                            layout="fill"
-                            objectFit="cover"
-                            alt="Back ground Image"
-                            src={BACKGROUND_IMAGE}
-                            className="rounded md:rounded-none"
-                        />
-                    </div>
-                </div>
+            <div style={{
+                backgroundImage: `url(${BACKGROUND_IMAGE})`
+            }} className="mt-2 md:mt-0 
+            relative 
+            mx-3 md:mx-0
+            bg-cover bg-center
+            aspect-[343/142] md:aspect-[1366/529]
+            rounded md:rounded-none">
 
                 <div className="pt-4 md:pt-[100px] pl-5 md:pl-[108px] text-white font-['Poppins']" >
                     <div className="font-semibold text-lg md:text-[60px] md:leading-[76px]">Car Marketplace</div>
                     <div className="font-medium  w-[50%] 
                     mt-1 md:mt-4
                     text-[6px] md:text-[18px] 
-                    text-gray-400">
+                    text-neutral-4">
                         <div>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         </div>
