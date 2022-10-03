@@ -1,4 +1,5 @@
 import Header from 'components/Header'
+import SearchArea from 'components/SearchArea'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
@@ -11,6 +12,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      {/* <SearchArea /> */}
     </div>
   )
 }

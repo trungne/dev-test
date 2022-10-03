@@ -13,7 +13,7 @@ const MOBILE_LOGO_URL = `${CDN_HOST}cb_logo.png`
 
 const BACKGROUND_IMAGE = `${CDN_HOST}background_header_${isMobile ? "mobile" : "pc"}.png`
 
-const Address: React.FC = () => {
+const Address: React.FC = React.memo(() => {
     return <div className="flex justify-between px-[60px] py-4">
         <div className="flex gap-6">
             <div className="flex whitespace-pre-line my-1">
@@ -51,9 +51,10 @@ const Address: React.FC = () => {
             </div>
         </div>
     </div>
-}
+})
+Address.displayName = 'Address'
 
-const Menu: React.FC = () => {
+const Menu: React.FC = React.memo(() => {
     return (
         <div className="flex bg-neutral py-5 justify-around">
             <UCarIcon />
@@ -78,18 +79,20 @@ const Menu: React.FC = () => {
             </UnstyledButton>
         </div>
     )
-}
+})
+Menu.displayName = 'Menu'
 
-const PCHeader: React.FC = () => {
+const PCHeader: React.FC = React.memo(() => {
     return (
         <div className="hidden md:block">
             <Address />
             <Menu />
         </div>
     )
-}
+})
+PCHeader.displayName = 'PCHeader'
 
-const MobileHeader: React.FC = () => {
+const MobileHeader: React.FC = React.memo(() => {
     return (
         <div className="py-3 px-4 md:hidden flex justify-between items-center">
             <Image
@@ -100,12 +103,13 @@ const MobileHeader: React.FC = () => {
             <SearchIcon />
         </div>
     )
-}
+})
+
+MobileHeader.displayName = 'MobileHeader'
 
 const Header: React.FC = () => {
     return (
         <div>
-
             <MobileHeader />
             <PCHeader />
             <div className="mt-2 md:mt-0 relative">
@@ -147,7 +151,6 @@ const Header: React.FC = () => {
 
             </div>
         </div>
-
     )
 }
 
