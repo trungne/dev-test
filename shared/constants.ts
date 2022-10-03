@@ -1,0 +1,1 @@
+export const CDN_HOST = "https://d234qyqqy4qdru.cloudfront.net/"
