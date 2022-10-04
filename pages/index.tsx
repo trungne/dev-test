@@ -3,7 +3,7 @@ import SearchArea from 'components/SearchArea'
 import Instruction from 'components/Instruction'
 import CarList from 'components/CarList'
 
-import type { NextPage } from 'next'
+import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
 import Head from 'next/head'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
@@ -15,11 +15,11 @@ import AskSection from 'components/AskSection'
 import Footer from 'components/Footer'
 import About from 'components/About'
 
-type StaticProps = {
+type ServerSideProps = {
   vehicleTypes: Record<string, string>,
   defaultCarData: CarInfo[]
 }
-export const getStaticProps: GetStaticProps<StaticProps> = async () => {
+export const getServerSideProps: GetServerSideProps<ServerSideProps> = async () => {
   return {
     props: {
       vehicleTypes: vehicleTypeJSON,
@@ -29,8 +29,9 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
 }
 
 const DynamicFeaturedVehicle = dynamic(() => import('components/Feature'), { ssr: false })
+const DynamicCarList = dynamic(() => import('components/CarList'), { ssr: false })
 
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicleTypes, defaultCarData }) => {
+const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ vehicleTypes, defaultCarData }) => {
   return (
     <div>
       <Head>
@@ -41,7 +42,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicl
       <Header />
       <main>
         <SearchArea vehicleTypes={vehicleTypes} />
-        <CarList defaultCarData={defaultCarData} />
+        <DynamicCarList defaultCarData={defaultCarData} />
         <Instruction />
         <DynamicFeaturedVehicle />
         <AskSection />

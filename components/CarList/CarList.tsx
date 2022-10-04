@@ -4,6 +4,7 @@ import React from "react";
 import { CarInfo } from "shared/types";
 import { getCDNImage } from "shared/utils";
 import { useGetCarInfoQuery } from "store/carapi.slice";
+import { isMobile } from "react-device-detect"
 import InfoCard from "./InfoCard";
 
 type Props = {
@@ -13,7 +14,15 @@ const CarList: React.FC<Props> = ({ defaultCarData }) => {
     // refetch car data to make sure that the data displayed is the latest one
     const { data } = useGetCarInfoQuery()
 
+    const cards = React.useMemo(() => {
 
+        const displayedCards = defaultCarData?.map(info => <InfoCard key={info.name + info.brandName + info.photoURL} carInfo={info} />)
+
+        const insertedIndex = isMobile ? 2 : 0
+
+        displayedCards.splice(insertedIndex, 0, <AdvertiseCard key={"advertise card"} imageSrc={getCDNImage('car_ad.png')} />)
+        return displayedCards
+    }, [defaultCarData])
     return (
         <>
             <div className="grid place-items-center overflow-x-auto overflow-hidden
@@ -29,8 +38,7 @@ const CarList: React.FC<Props> = ({ defaultCarData }) => {
     lg:grid-cols-3 xl:grid-cols-4
     xl:max-w-[1242px]
     ">
-                    <AdvertiseCard imageSrc={getCDNImage('car_ad.png')} />
-                    {defaultCarData.map(info => <InfoCard key={info.name + info.brandName + info.photoURL} carInfo={info} />)}
+                    {cards}
                 </div>
             </div>
             <div className="flex mt-6 px-3">
