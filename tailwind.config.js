@@ -16,6 +16,8 @@ module.exports = {
         ['neutral-7']: '#5F5F5F',
         ['neutral-8']: '#232323',
         ['carbuyer-primary']: '#EE1B24',
+        ['secondary-main']: '#0F5EDD',
+        ['secondary-light']: '#E5EEFB',
       }
     },
   },
