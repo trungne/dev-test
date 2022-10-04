@@ -38,4 +38,4 @@ const InfoCard: React.FC<Props> = ({ carInfo }) => {
     </Paper>
 }
 
-export default InfoCard
+export default React.memo(InfoCard)

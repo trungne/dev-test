@@ -33,4 +33,4 @@ const AskSection: React.FC = () => {
     )
 }
 
-export default AskSection
+export default React.memo(AskSection)

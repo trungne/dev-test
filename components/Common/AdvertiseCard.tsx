@@ -5,10 +5,10 @@ import Image from "next/image";
 
 export const AdvertiseCard: React.FC<{ imageSrc: string }> = ({ imageSrc }) => {
     return (
-        <Paper className="w-[281px] relative h-[361px] cursor-pointer" shadow="sm">
+        <Paper className="min-w-[281px] w-[281px] relative h-[361px] cursor-pointer" shadow="sm">
             <Image objectFit="contain" alt="advertise" src={imageSrc} layout="fill" />
         </Paper>
     )
 }
 
-export default AdvertiseCard
+export default React.memo(AdvertiseCard)

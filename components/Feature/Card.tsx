@@ -18,4 +18,4 @@ const Card: React.FC<{ vehicle: FeaturedVehicle }> = ({ vehicle }) => {
     </div>
 }
 
-export default Card
+export default React.memo(Card)

@@ -56,4 +56,4 @@ const Intrusction: React.FC = () => {
     )
 }
 
-export default Intrusction
+export default React.memo(Intrusction)
