@@ -26,7 +26,7 @@ const CarStateInput: React.FC = () => {
     const [carState, setCarState] = React.useState<SelectDataType['value']>('used');
 
     return (
-        <Paper className="md:w-[290px]" shadow="xs">
+        <Paper className="lg:w-[200px] xl:w-[290px]" shadow="xs">
             <Popover classNames={{
                 dropdown: 'w-3/4 md:w-[330px]'
             }} position="bottom" shadow="md">
@@ -55,7 +55,7 @@ const PriceRangeInput: React.FC = () => {
     const [priceRange, setPriceRange] = React.useState<{ min: number, max: number }>({ min: 10000, max: 100000 })
     const [opened, setOpened] = React.useState(false)
     return (
-        <Paper className="md:w-[410px]" shadow="xs">
+        <Paper className="lg:w-[310px] xl:w-[410px]" shadow="xs">
             <Popover opened={opened} onChange={setOpened} classNames={{
                 dropdown: 'w-full md:w-[400px]'
             }} position="bottom" shadow="md">
@@ -144,7 +144,7 @@ const VehicleTypeInput: React.FC<Props> = ({ vehicleTypes }) => {
     const [opened, setOpened] = React.useState(false)
 
     return (
-        <Paper className="md:w-[290px]" shadow="xs">
+        <Paper className="lg:w-[200px] xl:w-[290px]" shadow="xs">
             <Popover opened={opened} onChange={setOpened} classNames={{
                 dropdown: 'w-full md:w-[475px]'
             }} position="bottom" shadow="md">
@@ -208,7 +208,7 @@ const SearchArea: React.FC<Props> = ({ vehicleTypes }) => {
         <div className="md:relative md:flex md:justify-center">
             <div className="
                 md:absolute
-        
+                m-auto
                 md:top-[-30px]
                 lg:top-[-50px]
                 mx-3 md:mx-0
@@ -234,8 +234,12 @@ const SearchArea: React.FC<Props> = ({ vehicleTypes }) => {
             
             py-5 
             md:self-center
-            md:px-11
-            md:ml-24
+            md:px-8
+            lg:px-11
+            md:ml-10
+
+            lg:ml-20
+            xl:ml-24
             rounded-md font-bold">Search</UnstyledButton>
             </div>
         </div>
