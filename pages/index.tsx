@@ -30,8 +30,11 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicl
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <SearchArea vehicleTypes={vehicleTypes} />
-      <CarList defaultCarData={defaultCarData} />
+      <main>
+        <SearchArea vehicleTypes={vehicleTypes} />
+        <CarList defaultCarData={defaultCarData} />
+      </main>
+
     </div>
   )
 }
