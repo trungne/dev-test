@@ -10,15 +10,13 @@ import InfoCard from "./InfoCard";
 const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
     // const { data: carData } = useGetCarInfoQuery()
 
-    const cards = React.useMemo(() => {
-        const displayedCards = carData?.map(info => <InfoCard key={info.name + info.brandName + info.photoURL} carInfo={info} />)
-        const insertedIndex = isMobile ? 2 : 0
-        displayedCards?.splice(insertedIndex, 0, <AdvertiseCard key={"advertise card"} imageSrc={getCDNImage('car_ad.png')} />)
-        return displayedCards
-    }, [carData])
+    const idxToRenderAds = React.useMemo(() => {
+        return isMobile ? 2 : 0
+    }, [])
+
     return (
         <>
-            <div className="grid place-items-center overflow-x-auto overflow-hidden
+            <div className="grid place-items-center overflow-x-auto overflow-hidden scrollbar-hide
         ">
                 <div className="
     mt-10 md:mt-40
@@ -31,7 +29,14 @@ const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
     lg:grid-cols-3 xl:grid-cols-4
     xl:max-w-[1242px]
     ">
-                    {cards}
+                    {Array.from(new Array(carData.length + 1)).map((_, idx) => {
+                        if (idx === idxToRenderAds) {
+                            return <AdvertiseCard key={"advertise"} imageSrc={getCDNImage('car_ad.png')} />
+                        }
+                        const actualIndex = idx > idxToRenderAds ? idx - 1 : idx
+                        const info = carData[actualIndex]
+                        return <InfoCard key={info.name + info.brandName + info.photoURL} carInfo={info} />
+                    })}
                 </div>
             </div>
             <div className="flex mt-6 px-3">
@@ -53,4 +58,4 @@ const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
     )
 }
 
-export default CarList
+export default React.memo(CarList)
