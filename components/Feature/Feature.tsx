@@ -5,7 +5,6 @@ import Card from "./Card";
 
 const Feature: React.FC = () => {
     const { data: featuredVehicles } = useGetFeaturedVehiclesQuery()
-
     return <div className="pt-[60px] md:pt-[80px] 
     md:pl-[60px] font-['Poppins'] text-center md:text-left">
         <div className="grid place-items-center md:place-content-start">
@@ -25,10 +24,8 @@ const Feature: React.FC = () => {
                 </div>
                 <UnstyledButton className="absolute top-[393px] right-[20px] md:top-[-70px] md:right-[60px] bg-carbuyer-primary text-white rounded-md py-[10px] px-12 font-bold text-base">View More</UnstyledButton>
             </div>
-
-
         }
     </div>
 }
 
-export default Feature
+export default React.memo(Feature)
