@@ -1,12 +1,13 @@
 import AdvertiseCard from "components/Common/AdvertiseCard";
 import UnstyledButton from "components/Common/UnstyledButton";
 import React from "react";
+import { FeaturedVehicle } from "shared/types";
 import { getCDNImage } from "shared/utils";
 import { useGetFeaturedVehiclesQuery } from "store/carapi.slice";
 import Card from "./Card";
 
-const Feature: React.FC = () => {
-    const { data: featuredVehicles } = useGetFeaturedVehiclesQuery()
+const Feature: React.FC<{ featuredVehicles: FeaturedVehicle[] }> = ({ featuredVehicles }) => {
+    // const { data: featuredVehicles } = useGetFeaturedVehiclesQuery()
 
     const displayedItems = React.useMemo(() => {
         const vehicles = featuredVehicles?.map((vehicle, idx) => <Card key={vehicle.name + idx} vehicle={vehicle} />)

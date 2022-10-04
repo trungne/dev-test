@@ -1,37 +1,44 @@
 import Header from 'components/Header'
 import SearchArea from 'components/SearchArea'
 import Instruction from 'components/Instruction'
-import CarList from 'components/CarList'
 
 import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
 import Head from 'next/head'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
 
 import vehicleTypeJSON from 'components/SearchArea/vehicle-type.json'
-import defaultCarData from 'server/car.json'
-import { CarInfo } from 'shared/types'
 import AskSection from 'components/AskSection'
 import Footer from 'components/Footer'
 import About from 'components/About'
+import { store } from 'store/store'
+
+import { carAPI } from 'store/carapi.slice'
+import CarList from 'components/CarList'
+import { CarInfo, FeaturedVehicle } from 'shared/types'
+
+import carDataJSON from 'server/car.json'
+import featuredVehicleJSON from 'server/featured-vehicle.json'
+import Feature from 'components/Feature'
 
 type ServerSideProps = {
   vehicleTypes: Record<string, string>,
-  defaultCarData: CarInfo[]
+  carData: CarInfo[],
+  featuredVehicles: FeaturedVehicle[]
 }
 export const getServerSideProps: GetServerSideProps<ServerSideProps> = async () => {
+  // await store.dispatch(carAPI.endpoints.getCarInfo.initiate())
+  // await store.dispatch(carAPI.endpoints.getFeaturedVehicles.initiate())
   return {
     props: {
       vehicleTypes: vehicleTypeJSON,
-      defaultCarData: defaultCarData,
+      carData: carDataJSON,
+      featuredVehicles: featuredVehicleJSON
     },
   }
 }
 
-const DynamicFeaturedVehicle = dynamic(() => import('components/Feature'), { ssr: false })
-const DynamicCarList = dynamic(() => import('components/CarList'), { ssr: false })
 
-const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ vehicleTypes, defaultCarData }) => {
+const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ vehicleTypes, carData, featuredVehicles }) => {
   return (
     <div>
       <Head>
@@ -42,9 +49,9 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
       <Header />
       <main>
         <SearchArea vehicleTypes={vehicleTypes} />
-        <DynamicCarList defaultCarData={defaultCarData} />
+        <CarList carData={carData} />
         <Instruction />
-        <DynamicFeaturedVehicle />
+        <Feature featuredVehicles={featuredVehicles} />
         <AskSection />
         <About />
       </main>

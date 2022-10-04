@@ -7,22 +7,15 @@ import { useGetCarInfoQuery } from "store/carapi.slice";
 import { isMobile } from "react-device-detect"
 import InfoCard from "./InfoCard";
 
-type Props = {
-    defaultCarData: CarInfo[]
-}
-const CarList: React.FC<Props> = ({ defaultCarData }) => {
-    // refetch car data to make sure that the data displayed is the latest one
-    const { data } = useGetCarInfoQuery()
+const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
+    // const { data: carData } = useGetCarInfoQuery()
 
     const cards = React.useMemo(() => {
-
-        const displayedCards = defaultCarData?.map(info => <InfoCard key={info.name + info.brandName + info.photoURL} carInfo={info} />)
-
+        const displayedCards = carData?.map(info => <InfoCard key={info.name + info.brandName + info.photoURL} carInfo={info} />)
         const insertedIndex = isMobile ? 2 : 0
-
-        displayedCards.splice(insertedIndex, 0, <AdvertiseCard key={"advertise card"} imageSrc={getCDNImage('car_ad.png')} />)
+        displayedCards?.splice(insertedIndex, 0, <AdvertiseCard key={"advertise card"} imageSrc={getCDNImage('car_ad.png')} />)
         return displayedCards
-    }, [defaultCarData])
+    }, [carData])
     return (
         <>
             <div className="grid place-items-center overflow-x-auto overflow-hidden
