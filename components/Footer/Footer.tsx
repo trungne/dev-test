@@ -75,8 +75,6 @@ const MobileAccordion: React.FC = () => {
     )
 }
 
-
-
 const ContactInfo: React.FC = () => {
     const [email, setEmail] = React.useState<string>();
 
@@ -214,11 +212,48 @@ const PCLinks: React.FC = () => {
     )
 }
 
+const PCTermsAndConditions: React.FC = () => {
+    return (
+        <div className="hidden md:flex md:gap-1 md:mb-[18px] w-full">
+            <Link href="/">
+                <span className="text-sm leading-[22px] text-neutral-8 font-normal cursor-pointer">Advertising Terms and Conditions</span>
+            </Link>
+            <Link href="/">
+                <span className="text-sm leading-[22px] text-neutral-8 font-normal cursor-pointer">Platform Terms and Conditions</span>
+            </Link>
+            <Link href="/">
+                <span className="text-sm leading-[22px] text-neutral-8 font-normal cursor-pointer">Privacy Policy</span>
+            </Link>
+
+            <span className="text-neutral-6 text-sm leading-[22px] font-normal ml-auto">© 2022. All rights reserved.</span>
+        </div>
+    )
+}
+
+const Icon: React.FC = () => {
+    return (
+        <div className="flex gap-2 mb-6 items-center md:mb-10">
+            <UCarIcon width={58.65} height={16} />
+            <div className="text-[10px] leading-5 text-neutral-7 font-normal text-center">
+                CarBuyer Pte Ltd and the CarBuyer Singapore brand are wholly owned by UCARS Pte Ltd
+            </div>
+        </div>
+    )
+}
+
+const MobileDisclaimer: React.FC = () => {
+    return (
+        <div className="bg-neutral-8 mx-[-16px] text-white text-xs leading-5 font-normal py-[14px] text-center md:hidden">
+            © 2022. All rights reserved.
+        </div>
+    )
+}
+
 
 const Footer: React.FC = () => {
     return (
         <footer className="font-['Poppins'] px-4 
-    grid place-items-center
+    grid md:justify-items-center
     md:px-12 lg:px-18 xl:px-28">
             <div className="md:max-w-[1330px]">
                 <div className="py-6 md:flex  md:pt-[52px] md:pb-12 md:flex-wrap">
@@ -228,18 +263,11 @@ const Footer: React.FC = () => {
                     <ContactInfo />
                 </div>
 
-                <div className="flex gap-2 mt-6">
-                    <UCarIcon />
-                    <div className="text-[10px] leading-5 text-neutral-7 font-normal text-center">
-                        CarBuyer Pte Ltd and the CarBuyer Singapore brand are wholly owned by UCARS Pte Ltd
-                    </div>
-                </div>
+                <PCTermsAndConditions />
+                <Icon />
             </div>
 
-
-            <div className="bg-neutral-8 mx-[-16px] text-white text-xs leading-5 font-normal py-[14px] text-center md:hidden">
-                © 2022. All rights reserved.
-            </div>
+            <MobileDisclaimer />
         </footer>)
 }
 
