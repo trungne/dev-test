@@ -1,0 +1,7 @@
+.info-text {
+    @apply text-xs leading-5 text-neutral-8 text-center grow
+}
+
+.container {
+    @apply flex gap-2 items-center
+}
