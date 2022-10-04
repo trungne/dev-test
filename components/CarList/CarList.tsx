@@ -1,9 +1,10 @@
+import AdvertiseCard from "components/Common/AdvertiseCard";
 import UnstyledButton from "components/Common/UnstyledButton";
 import React from "react";
 import { CarInfo } from "shared/types";
 import { getCDNImage } from "shared/utils";
 import { useGetCarInfoQuery } from "store/carapi.slice";
-import InfoCard, { AdvertiseCard } from "./InfoCard";
+import InfoCard from "./InfoCard";
 
 type Props = {
     defaultCarData: CarInfo[]

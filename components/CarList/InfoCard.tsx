@@ -3,15 +3,6 @@ import { Paper } from '@mantine/core'
 import { CarInfo } from "shared/types";
 import Image from "next/image";
 
-
-export const AdvertiseCard: React.FC<{ imageSrc: string }> = ({ imageSrc }) => {
-    return (
-        <Paper className="w-[281px] relative h-[361px] cursor-pointer" shadow="sm">
-            <Image objectFit="contain" alt="advertise" src={imageSrc} layout="fill" />
-        </Paper>
-    )
-}
-
 type Props = {
     carInfo: CarInfo
 }
