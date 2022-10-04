@@ -147,88 +147,100 @@ const ContactInfo: React.FC = () => {
 
 }
 
+const Address: React.FC = () => {
+    return (
+        <div>
+            <div className="relative w-[158px] h-[48px] md:hidden">
+                <Image
+                    loading="lazy"
+                    layout="fill"
+                    alt="footer logo" src={getCDNImage('cb_logo_2_mobile.png')} />
+            </div>
+
+            <div className="relative w-[300px] h-[62px] hidden md:block">
+                <Image
+                    loading="lazy"
+                    layout="fill"
+                    alt="footer logo" src={getCDNImage('cb_logo_2_pc.png')} />
+            </div>
+
+            <div className="mt-4 mb-6 flex flex-col gap-4 
+                md:gap-2">
+                <div className={styles['container']}>
+                    <PinDrop width={14} height={14} /> <div className={styles['info-text']}>71 Ayer Rajah Crescent, #06-14, Singapore 139951</div>
+                </div>
+                <div className={styles['container']}>
+                    <Phone width={14} height={14} /> <div className={styles['info-text']}>+65 8808 7905</div>
+                </div>
+                <div className={styles['container']}>
+                    <Email width={14} height={14} /> <div className={styles['info-text']}>hello@carbuyer.com.sg</div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const PCLinks: React.FC = () => {
+    return (
+        <div className="hidden md:flex md:gap-4 lg:gap-8 md:mx-4 lg:mx-8 md:whitespace-nowrap md:flex-1 md:justify-around">
+            <div>
+                <h2 className={cx(styles.h2)}>About</h2>
+                <div className={cx(styles['container-pc'])}>
+                    <Link href="/"><span className={cx(styles.h3)}>About Us</span></Link>
+                    <Link href="/"><span className={cx(styles.h3)}>Contact Us</span></Link>
+                    <Link href="/"><span className={cx(styles.h3)}>Careers</span></Link>
+                </div>
+            </div>
+
+            <div>
+                <h2 className={cx(styles.h2)}>Services</h2>
+                <div className={cx(styles['container-pc'])}>
+                    <Link href="/"><span className={cx(styles.h3)}>Buy Used Cars</span></Link>
+                    <Link href="/"><span className={cx(styles.h3)}>Buy New Cars</span></Link>
+                    <Link href="/"><span className={cx(styles.h3, "whitespace-normal")}>Be a Dealer with UCARS</span></Link>
+                </div>
+            </div>
+
+            <div>
+                <h2 className={cx(styles.h2)}>Resources</h2>
+                <div className={cx(styles['container-pc'])}>
+                    <Link href="/"><span className={cx(styles.h3)}>News</span></Link>
+                    <Link href="/"><span className={cx(styles.h3)}>Sell My Car</span></Link>
+                    <Link href="/"><span className={cx(styles.h3)}>COE Prices</span></Link>
+                </div>
+            </div>
+
+        </div>
+    )
+}
+
 
 const Footer: React.FC = () => {
-    return <footer className="font-['Poppins'] px-4 
+    return (
+        <footer className="font-['Poppins'] px-4 
     grid place-items-center
-    md:px-12 lg:px-18 xl:px-28 ">
-        <div className="md:max-w-[1330px]">
-            <div className="py-6 md:flex  md:pt-[52px] md:pb-12 md:flex-wrap">
-                <div>
-                    <div className="relative w-[158px] h-[48px] md:hidden">
-                        <Image
-                            loading="lazy"
-                            layout="fill"
-                            alt="footer logo" src={getCDNImage('cb_logo_2_mobile.png')} />
-                    </div>
-
-                    <div className="relative w-[300px] h-[62px] hidden md:block">
-                        <Image
-                            loading="lazy"
-                            layout="fill"
-                            alt="footer logo" src={getCDNImage('cb_logo_2_pc.png')} />
-                    </div>
-
-                    <div className="mt-4 mb-6 flex flex-col gap-4 
-                md:gap-2">
-                        <div className={styles['container']}>
-                            <PinDrop width={14} height={14} /> <div className={styles['info-text']}>71 Ayer Rajah Crescent, #06-14, Singapore 139951</div>
-                        </div>
-                        <div className={styles['container']}>
-                            <Phone width={14} height={14} /> <div className={styles['info-text']}>+65 8808 7905</div>
-                        </div>
-                        <div className={styles['container']}>
-                            <Email width={14} height={14} /> <div className={styles['info-text']}>hello@carbuyer.com.sg</div>
-                        </div>
-                    </div>
+    md:px-12 lg:px-18 xl:px-28">
+            <div className="md:max-w-[1330px]">
+                <div className="py-6 md:flex  md:pt-[52px] md:pb-12 md:flex-wrap">
+                    <Address />
+                    <PCLinks />
+                    <MobileAccordion />
+                    <ContactInfo />
                 </div>
 
-                <div className="hidden md:flex md:gap-4 lg:gap-8 md:mx-4 lg:mx-8 md:whitespace-nowrap md:flex-1 md:justify-around">
-                    <div>
-                        <h2 className={cx(styles.h2)}>About</h2>
-                        <div className={cx(styles['container-pc'])}>
-                            <Link href="/"><span className={cx(styles.h3)}>About Us</span></Link>
-                            <Link href="/"><span className={cx(styles.h3)}>Contact Us</span></Link>
-                            <Link href="/"><span className={cx(styles.h3)}>Careers</span></Link>
-                        </div>
+                <div className="flex gap-2 mt-6">
+                    <UCarIcon />
+                    <div className="text-[10px] leading-5 text-neutral-7 font-normal text-center">
+                        CarBuyer Pte Ltd and the CarBuyer Singapore brand are wholly owned by UCARS Pte Ltd
                     </div>
-
-                    <div>
-                        <h2 className={cx(styles.h2)}>Services</h2>
-                        <div className={cx(styles['container-pc'])}>
-                            <Link href="/"><span className={cx(styles.h3)}>Buy Used Cars</span></Link>
-                            <Link href="/"><span className={cx(styles.h3)}>Buy New Cars</span></Link>
-                            <Link href="/"><span className={cx(styles.h3, "whitespace-normal")}>Be a Dealer with UCARS</span></Link>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h2 className={cx(styles.h2)}>Resources</h2>
-                        <div className={cx(styles['container-pc'])}>
-                            <Link href="/"><span className={cx(styles.h3)}>News</span></Link>
-                            <Link href="/"><span className={cx(styles.h3)}>Sell My Car</span></Link>
-                            <Link href="/"><span className={cx(styles.h3)}>COE Prices</span></Link>
-                        </div>
-                    </div>
-
-                </div>
-                <MobileAccordion />
-                <ContactInfo />
-            </div>
-
-            <div className="flex gap-2 mt-6">
-                <UCarIcon />
-                <div className="text-[10px] leading-5 text-neutral-7 font-normal text-center">
-                    CarBuyer Pte Ltd and the CarBuyer Singapore brand are wholly owned by UCARS Pte Ltd
                 </div>
             </div>
-        </div>
 
 
-        <div className="bg-neutral-8 mx-[-16px] text-white text-xs leading-5 font-normal py-[14px] text-center md:hidden">
-            © 2022. All rights reserved.
-        </div>
-    </footer>
+            <div className="bg-neutral-8 mx-[-16px] text-white text-xs leading-5 font-normal py-[14px] text-center md:hidden">
+                © 2022. All rights reserved.
+            </div>
+        </footer>)
 }
 
 export default React.memo(Footer)
