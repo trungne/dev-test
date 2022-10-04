@@ -9,7 +9,7 @@ import PinDrop from "components/icons/PinDrop";
 import Email from "components/icons/Email";
 import Link from "next/link";
 import { getCDNImage } from "shared/utils";
-
+import { isMobile } from 'react-device-detect'
 const Address: React.FC = React.memo(() => {
     return <div className="flex justify-between px-[60px] py-4">
         <div className="flex gap-6">
@@ -109,14 +109,16 @@ const Header: React.FC = () => {
         <div>
             <MobileHeader />
             <PCHeader />
-            <div style={{
-                backgroundImage: `url(${getCDNImage('background_header_pc.png')})`
-            }} className="mt-2 md:mt-0 
+            <div className="mt-2 md:mt-0 
             relative 
             mx-3 md:mx-0
             bg-cover bg-center
             aspect-[343/142] lg:aspect-[1366/529]
             rounded md:rounded-none">
+
+                <div className="absolute top-0 left-0 w-full h-full z-[-1]">
+                    <Image layout="fill" alt="background" src={getCDNImage(isMobile ? 'background_header_mobile.png' : 'background_header_pc.png')} />
+                </div>
 
                 <div className="pt-4 md:pt-[100px] pl-5 md:pl-[108px] text-white font-['Poppins']" >
                     <div className="font-semibold text-lg lg:text-[60px] lg:leading-[76px]">Car Marketplace</div>
