@@ -47,7 +47,7 @@ const Intrusction: React.FC = () => {
                     <Image loading="lazy" height={132} width={141} layout="fixed" alt="payment" src={getCDNImage('lock.png')} />
                     <h3 className={cx(styles.h3, "mt-[52px] mb-3")}>Make it Official</h3>
                     <h4 className={cx(styles.h4, "mt-0 mb-[18px]")}>
-                        We have been in business for over 32 years,for client outside the country you can trust  us to deliver well.
+                        We have been in business for over 32 years, for client outside the country you can trust  us to deliver well.
                     </h4>
                 </div>
             </div>

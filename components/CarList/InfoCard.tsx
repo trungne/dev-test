@@ -17,7 +17,7 @@ const InfoCard: React.FC<Props> = ({ carInfo }) => {
                 <span className=" text-base leading-6 text-neutral-8 font-normal">
                     {
                         carInfo.totalPrice ?
-                            <>From <span className="text-secondary-main">{carInfo.totalPrice}</span></> :
+                            <>From <span className="text-secondary-main">${carInfo.totalPrice}</span></> :
                             <>POA</>
                     }
                 </span>
