@@ -13,6 +13,7 @@ import defaultCarData from 'server/car.json'
 import { CarInfo } from 'shared/types'
 import AskSection from 'components/AskSection'
 import Footer from 'components/Footer'
+import About from 'components/About'
 
 type StaticProps = {
   vehicleTypes: Record<string, string>,
@@ -44,6 +45,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicl
         <Instruction />
         <DynamicFeaturedVehicle />
         <AskSection />
+        <About />
       </main>
 
       <Footer />
