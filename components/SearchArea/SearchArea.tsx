@@ -6,10 +6,6 @@ import { Popover } from '@mantine/core';
 import DollarSign from "components/icons/DollarSign";
 import UnstyledButton from "components/Common/UnstyledButton";
 
-type SelectDataType = {
-    value: string,
-    label: string
-}
 const CarStateData: Record<string, string> = {
     ['new-authorised']: "New Car (Authorised Dealer)",
     ['new-parallel']: "New Car (Parallel Importer)",
@@ -23,7 +19,7 @@ type Props = {
 }
 
 const CarStateInput: React.FC = () => {
-    const [carState, setCarState] = React.useState<SelectDataType['value']>('used');
+    const [carState, setCarState] = React.useState<string>('used');
 
     return (
         <Paper className="lg:w-[200px] xl:w-[290px]" shadow="xs">
@@ -207,8 +203,8 @@ const SearchArea: React.FC<Props> = ({ vehicleTypes }) => {
     return (
         <div className="md:relative md:flex md:justify-center">
             <div className="
-                md:absolute
                 m-auto
+                md:absolute
                 md:top-[-30px]
                 lg:top-[-50px]
                 mx-3 md:mx-0
@@ -218,8 +214,7 @@ const SearchArea: React.FC<Props> = ({ vehicleTypes }) => {
                 sm:max-w-2xl
                 md:max-w-4xl
                 lg:max-w-6xl
-                p-2 md:p-0
-                md:pr-10
+                p-2 md:p-0 md:pr-10
                 border-[1px]
                 border-neutral-3
                 border-solid
