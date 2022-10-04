@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic'
 import vehicleTypeJSON from 'components/SearchArea/vehicle-type.json'
 import defaultCarData from 'server/car.json'
 import { CarInfo } from 'shared/types'
+import AskSection from 'components/AskSection'
 
 type StaticProps = {
   vehicleTypes: Record<string, string>,
@@ -41,6 +42,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicl
         <CarList defaultCarData={defaultCarData} />
         <Instruction />
         <DynamicFeaturedVehicle />
+        <AskSection />
       </main>
 
     </div>
