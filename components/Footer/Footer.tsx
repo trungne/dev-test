@@ -3,7 +3,6 @@ import Phone from "components/icons/Phone";
 import PinDrop from "components/icons/PinDrop";
 import Image from "next/image";
 import React from "react";
-import { isMobile } from "react-device-detect"
 import { getCDNImage } from "shared/utils";
 import { Divider, Accordion, TextInput } from "@mantine/core"
 import styles from './styles.module.css'
@@ -73,7 +72,16 @@ const MobileAccordion: React.FC = () => {
 }
 
 const ContactInfo: React.FC = () => {
-    const [email, setEmail] = React.useState('');
+    const [email, setEmail] = React.useState<string>();
+
+    const subscribe = React.useCallback(() => {
+        if (!email) {
+            console.error('No value for email!')
+            return
+        }
+
+        console.log('email submitted: ' + email)
+    }, [email])
 
     return <div className="mt-6">
         <div className="flex text-xs leading-5 font-normal mb-2">
@@ -83,16 +91,19 @@ const ContactInfo: React.FC = () => {
                     &nbsp;latest&nbsp;
                 </span>
             </Link>
-
             automotive news sent to your inbox!
         </div>
         <div className="flex w-full">
-            <TextInput value={email} onChange={(event) => setEmail(event.currentTarget.value)} classNames={{
-                root: 'grow',
-                wrapper: 'h-full',
-                input: 'h-full border-r-0 rounded-none rounded-l'
-            }} placeholder="Enter your email" />
-            <UnstyledButton className="bg-carbuyer-primary text-white py-2 px-[14px] text-xs leading-6 font-semibold rounded-r">Subscribe</UnstyledButton>
+            <TextInput
+                onSubmit={subscribe}
+                aria-label="Enter email"
+                value={email}
+                onChange={(event) => setEmail(event.currentTarget.value)} classNames={{
+                    root: 'grow',
+                    wrapper: 'h-full',
+                    input: 'h-full border-r-0 rounded-none rounded-l'
+                }} placeholder="Enter your email" />
+            <UnstyledButton onClick={subscribe} className="bg-carbuyer-primary text-white py-2 px-[14px] text-xs leading-6 font-semibold rounded-r">Subscribe</UnstyledButton>
         </div>
 
         <div className="flex mt-6">
@@ -101,8 +112,7 @@ const ContactInfo: React.FC = () => {
             </span>
             <div className="flex gap-2 items-center">
                 <a className="grid place-content-center" href="https://instagram.com">
-                    <Instagram />
-                </a>
+                    <Instagram />                </a>
                 <a className="grid place-content-center" href="https://facebook.com">
                     <Facebook />
                 </a>
@@ -133,12 +143,21 @@ const ContactInfo: React.FC = () => {
 
 const Footer: React.FC = () => {
     return <footer className="font-['Poppins']">
-        <div className="py-6 px-4">
-            <Image
-                width={isMobile ? 158 : 300}
-                height={isMobile ? 48 : 62}
-                layout="fixed"
-                alt="footer logo" src={getCDNImage(isMobile ? 'cb_logo_2_mobile.png' : 'cb_logo_2_pc.png')} />
+        <div className="relative py-6 px-4">
+            <div className="relative w-[158px] h-[48px] md:hidden">
+                <Image
+                    loading="lazy"
+                    layout="fill"
+                    alt="footer logo" src={getCDNImage('cb_logo_2_mobile.png')} />
+            </div>
+
+            <div className="relative w-[300px] h-[62px] hidden md:block">
+                <Image
+                    loading="lazy"
+                    layout="fill"
+                    alt="footer logo" src={getCDNImage('cb_logo_2_pc.png')} />
+            </div>
+
             <div className="mt-4 mb-6 flex flex-col gap-4">
                 <div className={styles['container']}>
                     <PinDrop width={14} height={14} /> <div className={styles['info-text']}>71 Ayer Rajah Crescent, #06-14, Singapore 139951</div>
@@ -161,4 +180,4 @@ const Footer: React.FC = () => {
     </footer>
 }
 
-export default Footer
+export default React.memo(Footer)
