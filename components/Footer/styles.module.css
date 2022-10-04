@@ -1,7 +1,19 @@
 .info-text {
-    @apply text-xs leading-5 text-neutral-8 text-center grow
+    @apply text-xs leading-5 text-neutral-8 text-center grow md:grow-0
 }
 
 .container {
     @apply flex gap-2 items-center
+}
+
+.h2 {
+    @apply mt-0 mb-2 text-base font-semibold text-neutral-8
+}
+
+.h3 {
+    @apply my-0 text-sm leading-[22px] text-neutral-7 font-normal cursor-pointer
+}
+
+.container-pc {
+    @apply flex flex-col gap-3
 }
