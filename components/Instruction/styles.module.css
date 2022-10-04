@@ -1,0 +1,11 @@
+.h3 {
+    @apply text-white leading-9 text-2xl md:text-4xl md:leading-[54px]
+}
+
+.h4 {
+    @apply min-h-[124px] text-white text-base font-normal text-center md:text-2xl md:leading-9
+}
+
+.container {
+    @apply grid place-items-center md:max-w-[340px]
+}
