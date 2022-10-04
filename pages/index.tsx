@@ -6,6 +6,7 @@ import CarList from 'components/CarList'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import dynamic from 'next/dynamic'
 
 import vehicleTypeJSON from 'components/SearchArea/vehicle-type.json'
 import defaultCarData from 'server/car.json'
@@ -24,6 +25,8 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   }
 }
 
+const DynamicFeaturedVehicle = dynamic(() => import('components/Feature'), { ssr: false })
+
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicleTypes, defaultCarData }) => {
   return (
     <div>
@@ -37,6 +40,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ vehicl
         <SearchArea vehicleTypes={vehicleTypes} />
         <CarList defaultCarData={defaultCarData} />
         <Instruction />
+        <DynamicFeaturedVehicle />
       </main>
 
     </div>
