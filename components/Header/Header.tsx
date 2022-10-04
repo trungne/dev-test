@@ -81,24 +81,24 @@ Menu.displayName = 'Menu'
 
 const PCHeader: React.FC = React.memo(() => {
     return (
-        <header className="hidden md:block">
+        <div className="hidden md:block">
             <Address />
             <Menu />
-        </header>
+        </div>
     )
 })
 PCHeader.displayName = 'PCHeader'
 
 const MobileHeader: React.FC = React.memo(() => {
     return (
-        <header className="py-3 px-4 md:hidden flex justify-between items-center">
+        <div className="py-3 px-4 md:hidden flex justify-between items-center">
             <Image
                 width={120}
                 height={40}
                 alt="Car Buyer logo" src={getCDNImage('cb_logo.png')} />
 
             <SearchIcon />
-        </header>
+        </div>
     )
 })
 
@@ -106,7 +106,7 @@ MobileHeader.displayName = 'MobileHeader'
 
 const Header: React.FC = () => {
     return (
-        <div>
+        <header>
             <MobileHeader />
             <PCHeader />
             <div className="mt-2 md:mt-0 
@@ -144,7 +144,7 @@ const Header: React.FC = () => {
                 </div>
 
             </div>
-        </div>
+        </header>
     )
 }
 
