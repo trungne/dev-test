@@ -1,8 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { CDN_HOST } from "shared/constants";
 import SearchIcon from "components/icons/SearchIcon";
-import { isMobile } from "react-device-detect"
 import UCarIcon from "components/icons/UCarIcon";
 import UnstyledButton from "components/Common/UnstyledButton";
 import Phone from "components/icons/Phone";
@@ -10,9 +8,7 @@ import { Divider } from '@mantine/core'
 import PinDrop from "components/icons/PinDrop";
 import Email from "components/icons/Email";
 import Link from "next/link";
-const MOBILE_LOGO_URL = `${CDN_HOST}cb_logo.png`
-
-const BACKGROUND_IMAGE = `${CDN_HOST}background_header_${isMobile ? "mobile" : "pc"}.png`
+import { getCDNImage } from "shared/utils";
 
 const Address: React.FC = React.memo(() => {
     return <div className="flex justify-between px-[60px] py-4">
@@ -99,7 +95,7 @@ const MobileHeader: React.FC = React.memo(() => {
             <Image
                 width={120}
                 height={40}
-                alt="Car Buyer logo" src={MOBILE_LOGO_URL} />
+                alt="Car Buyer logo" src={getCDNImage('cb_logo.png')} />
 
             <SearchIcon />
         </header>
@@ -114,7 +110,7 @@ const Header: React.FC = () => {
             <MobileHeader />
             <PCHeader />
             <div style={{
-                backgroundImage: `url(${BACKGROUND_IMAGE})`
+                backgroundImage: `url(${getCDNImage('background_header_pc.png')})`
             }} className="mt-2 md:mt-0 
             relative 
             mx-3 md:mx-0

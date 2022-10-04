@@ -1,7 +1,7 @@
 import UnstyledButton from "components/Common/UnstyledButton";
 import React from "react";
-import { CDN_HOST } from "shared/constants";
 import { CarInfo } from "shared/types";
+import { getCDNImage } from "shared/utils";
 import { useGetCarInfoQuery } from "store/carapi.slice";
 import InfoCard, { AdvertiseCard } from "./InfoCard";
 
@@ -28,7 +28,7 @@ const CarList: React.FC<Props> = ({ defaultCarData }) => {
     lg:grid-cols-3 xl:grid-cols-4
     xl:max-w-[1242px]
     ">
-                    <AdvertiseCard imageSrc={CDN_HOST + 'car_ad.png'} />
+                    <AdvertiseCard imageSrc={getCDNImage('car_ad.png')} />
                     {defaultCarData.map(info => <InfoCard key={info.name + info.brandName + info.photoURL} carInfo={info} />)}
                 </div>
             </div>
