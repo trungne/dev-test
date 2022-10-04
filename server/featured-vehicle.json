@@ -1,0 +1,37 @@
+[
+    {
+        "name": "The Palace",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/featured_palace.png",
+        "description": "Lekki, phase 2",
+        "type": "Duplex",
+        "price": 2000
+    },
+    {
+        "name": "Ivy Rory",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/featured_ivy_rory.png",
+        "description": "Lekki, phase 2",
+        "type": "Duplex",
+        "price": 2000
+    },
+    {
+        "name": "Rexona",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/featured_rexona.png",
+        "description": "Lekki, phase 2",
+        "type": "Duplex",
+        "price": 2000
+    },
+    {
+        "name": "The Palace",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/featured_palace.png",
+        "description": "Lekki, phase 2",
+        "type": "Duplex",
+        "price": 2000
+    },
+    {
+        "name": "Ivy Rory",
+        "photoURL": "https://d234qyqqy4qdru.cloudfront.net/featured_ivy_rory.png",
+        "description": "Lekki, phase 2",
+        "type": "Duplex",
+        "price": 2000
+    }
+]

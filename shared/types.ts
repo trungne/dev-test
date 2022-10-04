@@ -9,6 +9,14 @@ export type CarInfo = {
     photoURL: string,
 }
 
+export type FeaturedVehicle = {
+    name: string,
+    photoURL: string,
+    description: string,
+    type: string,
+    price: number
+}
+
 export type AxiosBaseQueryResponse<Data> = {
     data: Data,
     msg: string,
