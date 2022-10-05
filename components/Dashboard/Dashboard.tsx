@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="flex">
-            <nav className="bg-[#323435] min-h-screen flex-1 min-w-[240px] max-w-[240px] px-4 py-6 flex flex-col">
+            <nav className="bg-[#323435] font-serif min-h-screen flex-1 min-w-[240px] max-w-[240px] px-4 py-6 flex flex-col">
                 <div className="flex items-center justify-between">
                     <UCarIcon width={102.91} height={28.07} />
                     <MenuIcon />
