@@ -1,4 +1,4 @@
-import { Tabs, Divider } from "@mantine/core";
+import { Tabs, Divider, Avatar } from "@mantine/core";
 import UnstyledButton from "components/Common/UnstyledButton";
 import Calendar from "components/icons/Calendar";
 import Car from "components/icons/Car";
@@ -7,6 +7,9 @@ import Setting from "components/icons/Setting";
 import UCarIcon from "components/icons/UCarIcon";
 import React from "react";
 import cx from "classnames"
+import Info from "components/icons/Info";
+import Bell from "components/icons/Bell";
+import ChevronDown from "components/icons/ChevronDown";
 type MenuButtonProps = {
     label: string,
     active: boolean,
@@ -20,9 +23,15 @@ type MenuButtonProps = {
 const MenuButton: React.FC<MenuButtonProps> = ({ label, active, onClick, Icon }) => {
     return <UnstyledButton onClick={onClick} className={cx("flex items-center rounded-md py-[14px] px-[22px]", active ? "bg-secondary-main" : "bg-transparent")} >
         <>
-            <Icon className="" fill={active ? "white" : "#8C8C8C"} /><span className={cx("ml-4 text-lg leading-6", active ? "text-white" : "text-neutral-6")}>{label}</span>
+            <Icon fill={active ? "white" : "#8C8C8C"} /><span className={cx("ml-4 text-lg leading-6", active ? "text-white" : "text-neutral-6")}>{label}</span>
         </>
     </UnstyledButton>
+}
+
+const CarBrandSection: React.FC = () => {
+    return <div>
+
+    </div>
 }
 
 type TabsType = 'car-brand' | 'folder' | 'tasks' | 'modules' | 'notification' | 'setting'
@@ -46,32 +55,45 @@ const Dashboard: React.FC = () => {
                 <Divider />
                 <MenuButton label="Setting" Icon={Setting} onClick={() => { setCurrentTab('setting') }} active={currentTab === 'setting'} />
             </nav>
+            <div className="grow">
+                <div className="flex items-center justify-end py-4 px-6 gap-4">
+                    <Info />
+                    <Bell />
+                    <div className="flex items-center">
+                        <Avatar radius="xl" classNames={{ root: "h-[36px] w-[36px]" }} size="md" className="mr-2" />
+                        <span className="mr-3">Admin</span>
+                        <ChevronDown />
+                    </div>
+                </div>
+                <Divider />
+                <Tabs value={currentTab}>
+                    <Tabs.Panel value="car-brand" pt="xs">
+                        car-brand
+                    </Tabs.Panel>
 
-            <Tabs value={currentTab}>
-                <Tabs.Panel value="car-brand" pt="xs">
-                    car-brand
-                </Tabs.Panel>
+                    <Tabs.Panel value="folder" pt="xs">
+                        folder
+                    </Tabs.Panel>
 
-                <Tabs.Panel value="folder" pt="xs">
-                    folder
-                </Tabs.Panel>
+                    <Tabs.Panel value="tasks" pt="xs">
+                        tasks
+                    </Tabs.Panel>
 
-                <Tabs.Panel value="tasks" pt="xs">
-                    tasks
-                </Tabs.Panel>
+                    <Tabs.Panel value="modules" pt="xs">
+                        modules
+                    </Tabs.Panel>
 
-                <Tabs.Panel value="modules" pt="xs">
-                    modules
-                </Tabs.Panel>
+                    <Tabs.Panel value="notification" pt="xs">
+                        notification
+                    </Tabs.Panel>
 
-                <Tabs.Panel value="notification" pt="xs">
-                    notification
-                </Tabs.Panel>
+                    <Tabs.Panel value="setting" pt="xs">
+                        setting
+                    </Tabs.Panel>
+                </Tabs>
+            </div>
 
-                <Tabs.Panel value="setting" pt="xs">
-                    setting
-                </Tabs.Panel>
-            </Tabs>
+
         </div>
     )
 }
