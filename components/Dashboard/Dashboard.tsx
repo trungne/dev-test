@@ -132,6 +132,8 @@ const CarBrandSection: React.FC = () => {
     const { viewCarBrandOption } = useDashboardState()
     const [opened, setOpened] = React.useState(false)
 
+    const [searchText, setSearchText] = React.useState<string>()
+
     const changeViewOptions = React.useCallback((viewOptions: Parameters<typeof setViewOption>['0']) => {
         dispatch(setViewOption(viewOptions))
         setOpened(false)
@@ -172,7 +174,10 @@ const CarBrandSection: React.FC = () => {
                         </Popover.Dropdown>
                     </Popover>
                 </div>
-                <TextInput icon={<SearchIcon fill="#5F5F5F" />} classNames={{
+                <TextInput 
+                value={searchText}
+                onChange={(e) => setSearchText(e.currentTarget.value)}
+                icon={<SearchIcon fill="#5F5F5F" />} classNames={{
                     root: "ml-[56px] basis-[240px]",
                     input: "rounded-full pl-[40px] py-2 h-[40px] bg-neutral-3 placeholder-neutral-6",
                     icon: "ml-2 "
@@ -184,7 +189,13 @@ const CarBrandSection: React.FC = () => {
             </div>
 
             <div id="car-brand-list-content">
-                {carBrands.map((brand, idx) => <CarBrandInfo key={brand.name + idx} brand={brand} />)}
+                {carBrands.filter(brand => {
+                    if (!searchText) {
+                        return brand
+                    }
+
+                    return brand.name.toLowerCase().includes(searchText.toLowerCase())
+                }).map((brand, idx) => <CarBrandInfo key={brand.name + idx} brand={brand} />)}
             </div>
         </div>
     )
@@ -196,7 +207,7 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="flex">
-            <nav className="bg-[#323435] min-h-screen flex-1 max-w-[240px] px-4 py-6 flex flex-col">
+            <nav className="bg-[#323435] min-h-screen flex-1 min-w-[240px] max-w-[240px] px-4 py-6 flex flex-col">
                 <div className="flex items-center justify-between">
                     <UCarIcon width={102.91} height={28.07} />
                     <MenuIcon />
@@ -211,7 +222,7 @@ const Dashboard: React.FC = () => {
                 <Divider />
                 <MenuButton label="Setting" Icon={Setting} onClick={() => { setCurrentTab('setting') }} active={currentTab === 'setting'} />
             </nav>
-            <div className="grow max-h-screen overflow-y-auto">
+            <div className="grow max-h-screen overflow-y-auto scrollbar-hide">
                 <div className="flex items-center justify-end py-4 px-6 gap-4">
                     <Info />
                     <Bell />
