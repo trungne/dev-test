@@ -39,8 +39,10 @@ const Dashboard: React.FC = () => {
         <div className="flex">
             <nav className="bg-[#323435] font-['Source_Sans_Pro'] min-h-screen flex-1 min-w-[240px] max-w-[240px] px-4 py-6 flex flex-col">
                 <div className="flex items-center justify-between">
-                    <Link href="/">
-                        <UCarIcon className="cursor-pointer" width={102.91} height={28.07} />
+                    <Link href="/" passHref>
+                        <a>
+                            <UCarIcon className="cursor-pointer" width={102.91} height={28.07} />
+                        </a>
                     </Link>
                     <MenuIcon className="cursor-pointer" />
                 </div>
