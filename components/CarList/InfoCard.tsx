@@ -2,6 +2,7 @@ import React from "react";
 import { Paper } from '@mantine/core'
 import { CarInfo } from "shared/types";
 import Image from "next/image";
+import { formatCurrency } from "shared/utils";
 
 type Props = {
     carInfo: CarInfo
@@ -17,12 +18,12 @@ const InfoCard: React.FC<Props> = ({ carInfo }) => {
                 <span className=" text-base leading-6 text-neutral-8 font-normal">
                     {
                         carInfo.totalPrice ?
-                            <>From <span className="text-secondary-main">${carInfo.totalPrice}</span></> :
+                            <>From <span className="text-secondary-main">${formatCurrency(carInfo.totalPrice, ',')}</span></> :
                             <>POA</>
                     }
                 </span>
                 <span className="rounded-sm bg-secondary-light py-[2px] px-1 text-secondary-main font-normal leading-5">
-                    ${carInfo.pricePerMonth}/mo
+                    ${formatCurrency(carInfo.pricePerMonth, ',')}/mo
                 </span>
             </div>
             <div className="flex gap-1 mb-4 text-neutral-7 text-sm leading-[22px] font-normal">

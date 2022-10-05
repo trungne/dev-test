@@ -5,6 +5,7 @@ import styles from './styles.module.css'
 import { Popover } from '@mantine/core';
 import DollarSign from "components/icons/DollarSign";
 import UnstyledButton from "components/Common/UnstyledButton";
+import { formatCurrency } from "shared/utils";
 
 const CarStateData: Record<string, string> = {
     ['new-authorised']: "New Car (Authorised Dealer)",
@@ -69,11 +70,11 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = ({ priceRange, setPriceR
                         <div className={styles['popover-target-value']}>
                             <div className="flex gap-4 items-center">
                                 <div className="text-neutral-7 text-sm leading-[15px] flex items-center gap-2">
-                                    <DollarSign /> <span>${priceRange.min.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                    <DollarSign /> <span>${formatCurrency(priceRange.min, ',')}</span>
                                 </div>
                                 <div className="w-4 border-[0.5px] border-solid border-neutral-7"></div>
                                 <div className="text-neutral-7 text-sm leading-[15px] flex items-center gap-2">
-                                    <DollarSign /> <span>${priceRange.max.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                    <DollarSign /> <span>${formatCurrency(priceRange.max, ',')}</span>
                                 </div>
                             </div>
 
