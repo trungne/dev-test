@@ -61,11 +61,11 @@ const PriceRangeInput: React.FC = () => {
                         <div className={styles['popover-target-value']}>
                             <div className="flex gap-4 items-center">
                                 <div className="text-neutral-7 text-sm leading-[15px] flex items-center gap-2">
-                                    <DollarSign /> <span>${priceRange.min}</span>
+                                    <DollarSign /> <span>${priceRange.min.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
                                 </div>
                                 <div className="w-4 border-[0.5px] border-solid border-neutral-7"></div>
                                 <div className="text-neutral-7 text-sm leading-[15px] flex items-center gap-2">
-                                    <DollarSign /> <span>${priceRange.max}</span>
+                                    <DollarSign /> <span>${priceRange.max.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
                                 </div>
                             </div>
 
@@ -80,10 +80,13 @@ const PriceRangeInput: React.FC = () => {
                             <div className="border border-solid border-neutral-4 py-2 px-4 rounded">
                                 <div className={styles['number-input-label']}>Min</div>
                                 <div className={styles['number-input-value-wrapper']}>
-                                    <span className={styles['number-input-value-currency']}>S$&nbsp;</span>
-                                    <NumberInput decimalSeparator="," defaultValue={priceRange.min} classNames={{
-                                        input: styles['number-input-value']
-                                    }} hideControls
+                                    {/* <span className={styles['number-input-value-currency']}>S$&nbsp;</span> */}
+                                    <NumberInput 
+                                        classNames={{
+                                            input: styles['number-input-value']
+                                        }}
+                                        defaultValue={priceRange.min}
+                                        hideControls
                                         max={MAX_PRICE}
                                         min={0}
                                         value={priceRange.min}
@@ -93,6 +96,12 @@ const PriceRangeInput: React.FC = () => {
                                                 min: val ?? 0
                                             }
                                         })}
+                                        parser={(value) => value?.replace(/S\$\s?|(,*)/g, '')}
+                                        formatter={(value) =>
+                                            !Number.isNaN(parseFloat(value ?? "a"))
+                                                ? `S$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                : 'S$ '
+                                        }
                                     />
 
                                 </div>
@@ -101,9 +110,8 @@ const PriceRangeInput: React.FC = () => {
                             <div className="border border-solid border-neutral-4 py-2 px-4 rounded">
                                 <div className={styles['number-input-label']}>Max</div>
                                 <div className={styles['number-input-value-wrapper']}>
-                                    <span className={styles['number-input-value-currency']}>S$&nbsp;</span>
-
-                                    <NumberInput decimalSeparator="," defaultValue={priceRange.max} classNames={{
+                                    <NumberInput 
+                                    defaultValue={priceRange.max} classNames={{
                                         input: styles['number-input-value']
                                     }} hideControls
                                         max={MAX_PRICE}
@@ -115,7 +123,12 @@ const PriceRangeInput: React.FC = () => {
                                                 max: val ?? 0
                                             }
                                         })}
-                                    //TODO: add parser
+                                        parser={(value) => value?.replace(/S\$\s?|(,*)/g, '')}
+                                        formatter={(value) =>
+                                            !Number.isNaN(parseFloat(value ?? "a"))
+                                                ? `S$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                : 'S$ '
+                                        }
                                     />
                                 </div>
                             </div>
