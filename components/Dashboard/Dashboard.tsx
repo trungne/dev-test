@@ -11,6 +11,7 @@ import Info from "components/icons/Info";
 import Bell from "components/icons/Bell";
 import ChevronDown from "components/icons/ChevronDown";
 import CarBrandTab from "./CarBrandTab";
+import Link from "next/link";
 
 type MenuButtonProps = {
     label: string,
@@ -38,8 +39,10 @@ const Dashboard: React.FC = () => {
         <div className="flex">
             <nav className="bg-[#323435] font-serif min-h-screen flex-1 min-w-[240px] max-w-[240px] px-4 py-6 flex flex-col">
                 <div className="flex items-center justify-between">
-                    <UCarIcon width={102.91} height={28.07} />
-                    <MenuIcon />
+                    <Link href="/">
+                        <UCarIcon className="cursor-pointer" width={102.91} height={28.07} />
+                    </Link>
+                    <MenuIcon className="cursor-pointer" />
                 </div>
                 <div className="flex flex-col grow overflow-y-scroll scrollbar-hide mt-11">
                     <MenuButton label="Car Brand" Icon={Car} onClick={() => { setCurrentTab('car-brand') }} active={currentTab === 'car-brand'} />
