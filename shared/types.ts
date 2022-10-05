@@ -1,3 +1,5 @@
+import React from "react"
+
 export type CarInfo = {
     name: string,
     totalPrice: number | null,
@@ -36,3 +38,9 @@ export type AxiosBaseQueryError = {
     data: any,
     status: number
 }
+
+export type IconType = React.NamedExoticComponent<React.SVGProps<SVGSVGElement> & {
+    width?: number,
+    height?: number,
+    fill?: string
+}>
