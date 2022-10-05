@@ -22,7 +22,7 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
     const [opened, setOpened] = React.useState(false)
 
     return (
-        <div className="max-w-[552px]">
+        <div className="max-w-[600px]">
             <div className="flex items-center gap-2 ">
                 <IconChevronLeft onClick={back} className="cursor-pointer" color="#232323" width={24} height={24} />
                 <span className="text-primary-dark-1 text-[24px] leading-[32px] font-bold">Brand Details</span>
