@@ -18,8 +18,12 @@ type Props = {
     vehicleTypes: Record<string, string>
 }
 
-const CarStateInput: React.FC = () => {
-    const [carState, setCarState] = React.useState<string>('used');
+type CarStateInputProps = {
+    carState: string,
+    setCarState: (state: string) => void
+}
+
+const CarStateInput: React.FC<CarStateInputProps> = ({ carState, setCarState }) => {
 
     return (
         <Paper className="lg:w-[200px] xl:w-[290px]" shadow="xs">
@@ -47,8 +51,12 @@ const CarStateInput: React.FC = () => {
     )
 }
 
-const PriceRangeInput: React.FC = () => {
-    const [priceRange, setPriceRange] = React.useState<{ min: number, max: number }>({ min: 10000, max: 100000 })
+type PriceRangeInputProps = {
+    priceRange: { min: number, max: number },
+    setPriceRange: React.Dispatch<React.SetStateAction<{ min: number, max: number }>>
+}
+
+const PriceRangeInput: React.FC<PriceRangeInputProps> = ({ priceRange, setPriceRange }) => {
     const [opened, setOpened] = React.useState(false)
     return (
         <Paper className="lg:w-[310px] xl:w-[410px]" shadow="xs">
@@ -81,7 +89,7 @@ const PriceRangeInput: React.FC = () => {
                                 <div className={styles['number-input-label']}>Min</div>
                                 <div className={styles['number-input-value-wrapper']}>
                                     {/* <span className={styles['number-input-value-currency']}>S$&nbsp;</span> */}
-                                    <NumberInput 
+                                    <NumberInput
                                         classNames={{
                                             input: styles['number-input-value']
                                         }}
@@ -110,10 +118,10 @@ const PriceRangeInput: React.FC = () => {
                             <div className="border border-solid border-neutral-4 py-2 px-4 rounded">
                                 <div className={styles['number-input-label']}>Max</div>
                                 <div className={styles['number-input-value-wrapper']}>
-                                    <NumberInput 
-                                    defaultValue={priceRange.max} classNames={{
-                                        input: styles['number-input-value']
-                                    }} hideControls
+                                    <NumberInput
+                                        defaultValue={priceRange.max} classNames={{
+                                            input: styles['number-input-value']
+                                        }} hideControls
                                         max={MAX_PRICE}
                                         min={0}
                                         value={priceRange.max}
@@ -148,8 +156,13 @@ const PriceRangeInput: React.FC = () => {
     )
 }
 
-const VehicleTypeInput: React.FC<Props> = ({ vehicleTypes }) => {
-    const [selectedVehicleTypes, setSelectedVehicleTypes] = React.useState<string[]>([])
+
+type VehicleTypeInputProps = {
+    vehicleTypes: Record<string, string>
+    selectedVehicleTypes: string[],
+    setSelectedVehicleTypes: (types: string[]) => void
+}
+const VehicleTypeInput: React.FC<VehicleTypeInputProps> = ({ vehicleTypes, selectedVehicleTypes, setSelectedVehicleTypes }) => {
     const [opened, setOpened] = React.useState(false)
 
     return (
@@ -213,41 +226,40 @@ const VehicleTypeInput: React.FC<Props> = ({ vehicleTypes }) => {
 }
 
 const SearchArea: React.FC<Props> = ({ vehicleTypes }) => {
+    const [carState, setCarState] = React.useState('used')
+    const [priceRange, setPriceRange] = React.useState<{ min: number, max: number }>({ min: 10000, max: 100000 })
+    const [selectedVehicleTypes, setSelectedVehicleTypes] = React.useState<string[]>([])
+
     return (
         <div className="md:relative md:flex md:justify-center">
             <div className="
                 m-auto
                 md:absolute
-                md:top-[-30px]
-                lg:top-[-50px]
+                md:top-[-30px] lg:top-[-50px]
                 mx-3 md:mx-0
                 mt-6 md:mt-0
                 block md:flex
                 sm:grow
-                sm:max-w-2xl
-                md:max-w-4xl
-                lg:max-w-6xl
+                sm:max-w-2xl md:max-w-4xl lg:max-w-6xl
                 p-2 md:p-0 md:pr-10
-                border-[1px]
-                border-neutral-3
-                border-solid
+                border-[1px] border-neutral-3 border-solid
                 rounded-[6px]
                 bg-white
     ">
-                <CarStateInput />
-                <PriceRangeInput />
-                <VehicleTypeInput vehicleTypes={vehicleTypes} />
-                <UnstyledButton className="bg-carbuyer-primary text-white text-base leading-5 
+                <CarStateInput carState={carState} setCarState={setCarState} />
+                <PriceRangeInput priceRange={priceRange} setPriceRange={setPriceRange} />
+                <VehicleTypeInput vehicleTypes={vehicleTypes} selectedVehicleTypes={selectedVehicleTypes} setSelectedVehicleTypes={setSelectedVehicleTypes} />
+                <UnstyledButton onClick={() => {
+                    console.log('New/Used: ', carState)
+                    console.log(`Price Range: ${priceRange.min} - ${priceRange.max}`)
+                    console.log(`Vehicle Type: ${selectedVehicleTypes}`)
+
+                }} className="bg-carbuyer-primary text-white text-base leading-5 
             w-full md:w-auto
-            
             py-5 
             md:self-center
-            md:px-8
-            lg:px-11
-            md:ml-10
-
-            lg:ml-20
-            xl:ml-24
+            md:px-8 lg:px-11
+            md:ml-10 lg:ml-20 xl:ml-24
             rounded-md font-bold">Search</UnstyledButton>
             </div>
         </div>
