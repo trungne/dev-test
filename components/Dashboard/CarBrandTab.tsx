@@ -32,7 +32,10 @@ const AddCarBrandModal: React.FC<{ opened: boolean, onClose: () => void }> = ({ 
                 <CommonBrandDetail isEditMode={true} />
 
                 <div id="add-car-brand-control-buttons" className="flex justify-end items-end gap-4 mt-[34px]">
-                    <UnstyledButton className="rounded-[4px] py-[9px] px-4 
+                    <UnstyledButton
+                        onClick={onClose}
+                        className="
+                rounded-[4px] py-[9px] px-4 
                 bg-transparent 
                 outline outline-1 outline-neutral-5 
                 text-neutral-8 text-sm leading-[22px] font-medium">Cancel</UnstyledButton>
