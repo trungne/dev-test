@@ -1,5 +1,5 @@
-import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio, Textarea } from "@mantine/core";
-import { IconPlus, IconPoint, IconChevronLeft, IconChevronDown } from "@tabler/icons";
+import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio, Textarea, Modal } from "@mantine/core";
+import { IconPlus, IconPoint, IconChevronLeft, IconChevronDown, IconX } from "@tabler/icons";
 import ChevronDown from "components/icons/ChevronDown";
 import Radio from "components/icons/Radio";
 import SearchIcon from "components/icons/SearchIcon";
@@ -12,9 +12,40 @@ import { setViewOption } from "store/dashboard.slice";
 import { useAppDispatch, useDashboardState } from "store/store";
 import styles from './style.module.css'
 
+const AddCarBrandModal: React.FC<{ opened: boolean, onClose: () => void }> = ({ opened, onClose }) => {
+    return (
+        <Modal centered={true} classNames={{
+            modal: "m-0",
+            body: "scrollbar-hide min-h-[684px]",
+            inner: 'p-0'
+        }} overflow="inside" padding={0} size="auto" withCloseButton={false} onClose={onClose} opened={opened}>
+            <div id="add-car-brand-header" className="flex bg-neutral-2 items-center justify-between px-6 py-4 font-['Poppins']">
+                <div className="max-w-[260px] min-w-[260px]">
+                    <div className="text-neutral-8 text-base font-bold">Add Car Brand</div>
+                    <div className="text-neutral-7 text-sm leading-[22px] mt-1 font-normal"></div>
+                </div>
 
+                <IconX className="cursor-pointer" onClick={onClose} width={32} height={32} color="#232323" fill="#E3E3E3" />
+            </div>
+            <Divider />
+            <div className="p-6">
+                <CommonBrandDetail isEditMode={true} />
 
-const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ brand, back }) => {
+                <div id="add-car-brand-control-buttons" className="flex justify-end items-end gap-4 mt-[34px]">
+                    <UnstyledButton className="rounded-[4px] py-[9px] px-4 
+                bg-transparent 
+                outline outline-1 outline-neutral-5 
+                text-neutral-8 text-sm leading-[22px] font-medium">Cancel</UnstyledButton>
+                    <UnstyledButton className="rounded-[4px] py-[9px] px-4 bg-secondary-main 
+                text-white text-sm leading-[22px] font-medium">Create Brand</UnstyledButton>
+                </div>
+            </div>
+        </Modal>
+    )
+}
+
+const CommonBrandDetail: React.FC<{ brand?: CarBrand, isEditMode: boolean }> = ({ brand, isEditMode }) => {
+    const [opened, setOpened] = React.useState(false)
     const activeColor = React.useMemo(() => {
         if (brand === undefined) {
             return { background: '#CEF7E2', text: '#1F7B4D' } // assume active
@@ -22,18 +53,10 @@ const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ bran
         return brand.isActive ? { background: '#CEF7E2', text: '#1F7B4D' } : { background: '#FAFAFA', text: '#5F5F5F' }
     }, [brand])
 
-    const [isEditMode, setIsEditMode] = React.useState(!brand)
-    const [opened, setOpened] = React.useState(false)
-
     return (
-        <div className="max-w-[600px]">
-            <div className="flex items-center gap-2 ">
-                <IconChevronLeft onClick={back} className="cursor-pointer" color="#232323" width={24} height={24} />
-                <span className="text-primary-dark-1 text-[24px] leading-[32px] font-bold">Brand Details</span>
-            </div>
-
+        <>
             <div>
-                <div className="mt-6 py-4 text-sm leading-6 text-neutral-8 font-bold">
+                <div className="py-3 text-sm leading-6 text-neutral-8 font-bold">
                     Brand Logo
                 </div>
 
@@ -69,14 +92,14 @@ const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ bran
                         <div className="text-neutral-8 mt-1 text-sm leading-[22px] font-bold">
                             {isEditMode ? <TextInput classNames={{
                                 input: "py-[9px] px-[14px] text-sm leading-[22px] font-semibold h-[40px]"
-                            }} value={brand?.name} placeholder="Enter new brand name" /> :
+                            }} value={brand?.name} placeholder="Input Content" /> :
                                 <div className="py-[9px]">
                                     {brand?.name}
                                 </div>}
                         </div>
                     </div>
 
-                    <div className='basis-28 mt-4'>
+                    <div className='basis-29 mt-4'>
                         <div className="text-neutral-6 text-sm leading-[22px] font-normal">
                             Brand Status
                         </div>
@@ -120,13 +143,30 @@ const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ bran
                         <div className="text-neutral-8 mt-1 text-sm leading-[22px] font-bold h-[100px]">
                             {isEditMode ? <Textarea classNames={{
                                 input: "py-[9px] px-[14px] text-sm leading-[22px] font-semibold h-[100px]"
-                            }} value={brand?.description} placeholder="Enter new brand name" /> : <div className="py-[9px]">
+                            }} value={brand?.description} placeholder="Input Content" /> : <div className="py-[9px]">
                                 {brand?.description}
                             </div>}
 
                         </div>
                     </div>
                 </div>
+            </div>
+        </>
+    )
+}
+
+const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ brand, back }) => {
+    const [isEditMode, setIsEditMode] = React.useState(!brand)
+
+    return (
+        <div className="max-w-[600px]">
+            <div className="flex items-center gap-2 ">
+                <IconChevronLeft onClick={back} className="cursor-pointer" color="#232323" width={24} height={24} />
+                <span className="text-primary-dark-1 text-[24px] leading-[32px] font-bold">Brand Details</span>
+            </div>
+            <div className="mt-4">
+                <CommonBrandDetail brand={brand} isEditMode={isEditMode} />
+
             </div>
 
             <UnstyledButton onClick={() => {
@@ -204,7 +244,7 @@ const CarBrandInfo: React.FC<{ brand: CarBrand, viewCarBrand: () => void }> = ({
                     className="bg-white 
                 ml-auto
                 rounded-[4px]
-                !border-solid border border-neutral-5
+                outline outline-1 outline-neutral-5
                 py-[9px] px-4 
                 text-sm 
                 leading-[22px] 
@@ -238,6 +278,8 @@ const CarBrandList: React.FC<{ viewCarBrand: (carBrand: CarBrand) => void }> = (
     const [opened, setOpened] = React.useState(false)
 
     const [searchText, setSearchText] = React.useState<string>()
+
+    const [modalOpened, setModalOpened] = React.useState(false)
 
     const changeViewOptions = React.useCallback((viewOptions: Parameters<typeof setViewOption>['0']) => {
         dispatch(setViewOption(viewOptions))
@@ -288,7 +330,9 @@ const CarBrandList: React.FC<{ viewCarBrand: (carBrand: CarBrand) => void }> = (
                         icon: "ml-2 "
                     }} placeholder="Search car brand" />
 
-                <UnstyledButton className="bg-secondary-main ml-auto items-center py-[10px] px-4 flex gap-4 rounded-md basis-[140px]">
+                <UnstyledButton
+                    onClick={() => { setModalOpened(true) }}
+                    className="bg-secondary-main ml-auto items-center py-[10px] px-4 flex gap-4 rounded-md basis-[140px]">
                     <IconPlus width={20} height={20} color="white" /> <span className="font-normal text-sm  text-white">Add Brand</span>
                 </UnstyledButton>
             </div>
@@ -302,6 +346,8 @@ const CarBrandList: React.FC<{ viewCarBrand: (carBrand: CarBrand) => void }> = (
                     return brand.name.toLowerCase().includes(searchText.toLowerCase())
                 }).map((brand, idx) => <CarBrandInfo key={brand.name + idx} brand={brand} viewCarBrand={() => viewCarBrand(brand)} />)}
             </div>
+
+            <AddCarBrandModal opened={modalOpened} onClose={() => { setModalOpened(false) }} />
         </>
     )
 }
@@ -310,7 +356,7 @@ const CarBrandTab: React.FC = () => {
     const [selectedCarBrand, setSelectedCarBrand] = React.useState<CarBrand>()
     return (
         <div className="py-[30px] px-[42px] font-['Poppins']">
-            {selectedCarBrand ? <CarBrandDetail back={() => setSelectedCarBrand(undefined)} /> :
+            {selectedCarBrand ? <CarBrandDetail back={() => setSelectedCarBrand(undefined)} brand={selectedCarBrand} /> :
                 <CarBrandList viewCarBrand={(brand) => setSelectedCarBrand(brand)} />
             }
         </div>
