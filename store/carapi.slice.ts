@@ -26,6 +26,10 @@ export const carAPI = createApi({
         updateCarBrands: builder.mutation<string, CarBrand>({
             query: (brand) => ({ url: 'update-car-brand', method: 'POST', data: brand }),
             invalidatesTags: (_, __, arg) => [{ type: 'CarBrands', id: arg.id }]
+        }),
+        createCarBrands: builder.mutation<{ id: number }, Omit<CarBrand, 'id'>>({
+            query: (brand) => ({ url: 'create-car-brand', method: 'POST', data: brand }),
+            invalidatesTags: ['CarBrands']
         })
     })
 })
@@ -35,5 +39,6 @@ export const {
     useGetCarInfoQuery,
     useGetFeaturedVehiclesQuery,
     useGetCarBrandsQuery,
-    useUpdateCarBrandsMutation
+    useUpdateCarBrandsMutation,
+    useCreateCarBrandsMutation,
 } = carAPI

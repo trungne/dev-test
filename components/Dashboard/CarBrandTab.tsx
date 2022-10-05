@@ -1,4 +1,4 @@
-import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio, Textarea, Modal } from "@mantine/core";
+import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio, Textarea, Modal, FileInput } from "@mantine/core";
 import { IconPlus, IconPoint, IconChevronLeft, IconChevronDown, IconX } from "@tabler/icons";
 import ChevronDown from "components/icons/ChevronDown";
 import Radio from "components/icons/Radio";
@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import React from "react";
 import { CarBrand } from "shared/types";
-import { useGetCarBrandsQuery, useUpdateCarBrandsMutation } from "store/carapi.slice";
+import { useCreateCarBrandsMutation, useGetCarBrandsQuery, useUpdateCarBrandsMutation } from "store/carapi.slice";
 import { setViewOption } from "store/dashboard.slice";
 import { useAppDispatch, useDashboardState } from "store/store";
 import styles from './style.module.css'
@@ -16,7 +16,7 @@ const AddCarBrandModal: React.FC<{ opened: boolean, onClose: () => void }> = ({ 
     return (
         <Modal centered={true} classNames={{
             modal: "m-0",
-            body: "scrollbar-hide min-h-[684px]",
+            body: "scrollbar-hide min-h-[684px] max-w-[600px] min-w-[600px]",
             inner: 'p-0'
         }} overflow="inside" padding={0} size="auto" withCloseButton={false} onClose={onClose} opened={opened}>
             <div id="add-car-brand-header" className="flex bg-neutral-2 items-center justify-between px-6 py-4 font-['Poppins']">
@@ -61,16 +61,23 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
 
 
     const [updateCarBrand] = useUpdateCarBrandsMutation()
+    const [createCarBrand] = useCreateCarBrandsMutation()
 
-    const [newCarBrand, setNewCarBrand] = React.useState<Partial<CarBrand>>({ ...brand })
+    // assume active
+    const [newCarBrand, setNewCarBrand] = React.useState<Partial<CarBrand>>(mode === 'create' ? { ...brand, isActive: true } : { ...brand })
 
     const activeColor = React.useMemo(() => {
-        if (mode === 'create') {
-            return { background: '#CEF7E2', text: '#1F7B4D' } // assume active
-        }
-        return newCarBrand?.isActive ? { background: '#CEF7E2', text: '#1F7B4D' } : { background: '#FAFAFA', text: '#5F5F5F' }
-    }, [newCarBrand, mode])
-
+        return newCarBrand.isActive ? { background: '#CEF7E2', text: '#1F7B4D' } : { background: '#FAFAFA', text: '#5F5F5F' }
+    }, [newCarBrand.isActive])
+    const inputLogo = React.useCallback((e: React.FormEvent<HTMLInputElement>) => {
+        console.log(e.currentTarget.value)
+        setNewCarBrand(prev => {
+            return {
+                ...prev,
+                logoURL: 'https://d234qyqqy4qdru.cloudfront.net/car_brand_toyota.png'
+            }
+        })
+    }, [])
     return (
         <>
             <div className="py-3 text-sm leading-6 text-neutral-8 font-bold">
@@ -80,18 +87,24 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
             <Divider />
 
             <div className="mt-4 relative w-[120px] h-[120px]">
-                {mode === 'edit' && brand && <div className="absolute cursor-pointer px-4 flex items-center justify-center rounded-full
+                {mode === 'edit' && newCarBrand && <div
+                    className="absolute cursor-pointer px-4 flex items-center justify-center rounded-full
                     w-full h-full left-0 top-0 bg-neutral-8 opacity-0 hover:opacity-80 z-10
                     text-base text-white text-center
                     ">
                     CHANGE LOGO
+                    <input type="file" onInput={inputLogo} accept="image/png, image/jpeg" name="file" className="cursor-pointer absolute w-full h-full opacity-0" />
+
                 </div>}
-                {mode === 'create' &&
+                {mode === 'create' && !newCarBrand.logoURL &&
                     <div className="flex flex-col cursor-pointer rounded-full items-center justify-center w-full h-full outline-dashed outline-neutral-4 bg-neutral-2">
+
                         <IconPlus width={32} height={32} color="#232323" />
                         <div className="mt-1 text-neutral-6 text-xs leading-5 font-bold">Brand Logo</div>
+                        <input type="file" onInput={inputLogo} accept="image/png, image/jpeg" name="file" className="cursor-pointer absolute w-full h-full opacity-0" />
                     </div>}
-                {newCarBrand && <Image src={newCarBrand.logoURL!} alt="brand logo" layout="fill" />}
+
+                {newCarBrand.logoURL && <Image src={newCarBrand.logoURL} alt="brand logo" layout="fill" />}
             </div>
 
 
@@ -123,14 +136,20 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                     <Popover opened={opened} onChange={setOpened}>
                         <Popover.Target>
                             <div
-                                onClick={() => { setOpened(o => !o) }}
+                                onClick={() => {
+                                    if (mode === 'read') {
+                                        return
+                                    }
+
+                                    setOpened(o => !o)
+                                }}
                                 style={{
                                     backgroundColor: activeColor.background,
                                     color: activeColor.text,
                                     cursor: mode !== 'read' ? 'pointer' : undefined
                                 }} className="flex items-center gap-2 rounded-full py-[5px] px-3 text-base font-semibold mt-[10px]">
                                 <Radio fill={activeColor.text} />
-                                {!newCarBrand ? 'Active' : newCarBrand.isActive ? 'Active' : 'Inactive'}
+                                {newCarBrand.isActive === undefined ? 'Active' : newCarBrand.isActive ? 'Active' : 'Inactive'}
                                 {mode !== 'read' && <IconChevronDown width={24} height={24} color="#232323" />}
                             </div>
                         </Popover.Target>
@@ -139,6 +158,7 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                                 <div
                                     onClick={() => {
                                         setNewCarBrand(prev => { return { ...prev, isActive: true } })
+                                        setOpened(o => !o)
                                     }}
                                     className="cursor-pointer py-[5px] px-3 flex items-center gap-2 rounded-full text-base font-semibold text-primary-dark-3 bg-primary-light-1">
                                     <Radio fill="#1F7B4D" />
@@ -148,6 +168,7 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                                 <div
                                     onClick={() => {
                                         setNewCarBrand(prev => { return { ...prev, isActive: false } })
+                                        setOpened(o => !o)
                                     }}
                                     className="cursor-pointer py-[5px] px-3 flex items-center gap-2 rounded-full text-base font-semibold text-neutral-7 bg-neutral-2">
                                     <Radio fill="#5F5F5F" />
@@ -187,6 +208,20 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                 text-neutral-8 text-sm leading-[22px] font-medium">Cancel</UnstyledButton>
                 <UnstyledButton onClick={() => {
                     onCreate?.()
+                    const { name, description, isActive, logoURL } = newCarBrand
+                    if (name === undefined || description === undefined || isActive === undefined || logoURL === undefined) {
+                        console.error('cannot create new brand!')
+                        return
+                    }
+                    const newBrand: Omit<CarBrand, 'id'> = {
+                        name: name,
+                        description: description,
+                        isActive: isActive,
+                        logoURL: logoURL,
+                        numberOfModels: 0,
+                        lastUpdate: new Date().getTime() // now
+                    }
+                    createCarBrand(newBrand)
                 }} className="rounded-[4px] py-[9px] px-4 bg-secondary-main 
                 text-white text-sm leading-[22px] font-medium">Create Brand</UnstyledButton>
             </div>}
@@ -216,7 +251,6 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
 
 const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ brand, back }) => {
     const [mode, setMode] = React.useState<Mode>('read')
-    const [updateCarBrand, { }] = useUpdateCarBrandsMutation()
 
     return (
         <div className="max-w-[600px]">
