@@ -9,7 +9,7 @@ import PinDrop from "components/icons/PinDrop";
 import Email from "components/icons/Email";
 import Link from "next/link";
 import { getCDNImage } from "shared/utils";
-import { isMobile } from 'react-device-detect'
+import { useAppState } from "store/store";
 const Address: React.FC = React.memo(() => {
     return <div className="flex justify-between px-[60px] py-4">
         <div className="flex gap-6">
@@ -105,6 +105,7 @@ const MobileHeader: React.FC = React.memo(() => {
 MobileHeader.displayName = 'MobileHeader'
 
 const Header: React.FC = () => {
+    const { isMobile } = useAppState()
     return (
         <header>
             <MobileHeader />

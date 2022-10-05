@@ -1,10 +1,12 @@
 import React from "react";
-import { isMobile } from "react-device-detect"
 import Image from "next/image";
 import { getCDNImage } from "shared/utils";
 import UnstyledButton from "components/Common/UnstyledButton";
 import Link from "next/link";
+import { useAppState } from "store/store";
 const AskSection: React.FC = () => {
+    const { isMobile } = useAppState()
+
     return (
         <div className="relative 
          font-['Poppins'] mt-[132px] min-h-[694px] px-6 md:px-20">
