@@ -202,11 +202,11 @@ const CarBrandInfo: React.FC<{ brand: CarBrand, viewCarBrand: () => void }> = ({
 
                 <div className="ml-10">
                     {(viewCarBrandOption === 'all' || viewCarBrandOption === 'brand-name') &&
-                        <span className="text-[20px] leading-[30px] font-medium text-primary-dark-1">{brand.name}</span>
+                        <span className="text-[20px] leading-[30px] font-bold text-primary-dark-1">{brand.name}</span>
                     }
                     <div className="flex gap-4 mt-1 items-center">
                         {(viewCarBrandOption === 'all' || viewCarBrandOption === 'brand-name') &&
-                            <span className="max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap ">
+                            <span className="max-w-[200px] text-neutral-6 font-normal text-ellipsis overflow-hidden whitespace-nowrap ">
                                 {brand.description}
                             </span>
                         }
@@ -226,10 +226,10 @@ const CarBrandInfo: React.FC<{ brand: CarBrand, viewCarBrand: () => void }> = ({
 
             <div className="flex items-center grow">
                 {(viewCarBrandOption === 'all' || viewCarBrandOption === 'last-updated') && <div>
-                    <div className=" text-primary-dark-1 text-sm leading-[22px] font-bold mb-3">
+                    <div className=" text-primary-dark-1 text-sm leading-[22px] font-semibold mb-3">
                         Last Update
                     </div>
-                    <div className="text-neutral-6 text-sm leading-[22px] font-normal">
+                    <div className="text-neutral-6 text-sm leading-[22px] font-medium">
                         {dayjs(brand.lastUpdate).format('DD/MM/YYYY')}
                     </div>
                 </div>}
@@ -303,7 +303,7 @@ const CarBrandList: React.FC<{ viewCarBrand: (carBrand: CarBrand) => void }> = (
                         <Popover.Target>
                             <div onClick={() => setOpened(o => !o)} className="flex items-center cursor-pointer py-[10px] px-4 gap-3">
                                 <ChevronDown />
-                                <span className="text-sm leading-[22px] text-neutral-8 font-medium">{getViewOptionLabel(viewCarBrandOption)}</span>
+                                <span className="text-sm leading-[22px] text-neutral-8 font-semibold">{getViewOptionLabel(viewCarBrandOption)}</span>
                             </div>
                         </Popover.Target>
                         <Popover.Dropdown>
