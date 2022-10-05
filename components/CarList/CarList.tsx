@@ -4,15 +4,17 @@ import React from "react";
 import { CarInfo } from "shared/types";
 import { getCDNImage } from "shared/utils";
 import { useGetCarInfoQuery } from "store/carapi.slice";
-import { isMobile } from "react-device-detect"
 import InfoCard from "./InfoCard";
+import { useAppState } from "store/store";
 
 const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
     // const { data: carData } = useGetCarInfoQuery()
-
+    const { isMobile } = useAppState()
     const idxToRenderAds = React.useMemo(() => {
         return isMobile ? 2 : 0
-    }, [])
+    }, [isMobile])
+
+    console.log('idxToRenderAds', idxToRenderAds)
 
     return (
         <>
@@ -29,14 +31,15 @@ const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
     lg:grid-cols-3 xl:grid-cols-4
     xl:max-w-[1242px]
     ">
-                    {Array.from(new Array(carData.length + 1)).map((_, idx) => {
+                    <>{Array.from(new Array(carData.length)).map((_, idx) => {
                         if (idx === idxToRenderAds) {
                             return <AdvertiseCard key={"advertise"} imageSrc={getCDNImage('car_ad.png')} />
                         }
                         const actualIndex = idx > idxToRenderAds ? idx - 1 : idx
                         const info = carData[actualIndex]
                         return <InfoCard key={info.name + info.brandName + info.photoURL} carInfo={info} />
-                    })}
+                    })}</>
+
                 </div>
             </div>
             <div className="flex mt-6 px-3">
