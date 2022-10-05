@@ -1,5 +1,5 @@
-import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio } from "@mantine/core";
-import { IconPlus, IconPoint, IconChevronLeft } from "@tabler/icons";
+import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio, Textarea } from "@mantine/core";
+import { IconPlus, IconPoint, IconChevronLeft, IconChevronDown } from "@tabler/icons";
 import ChevronDown from "components/icons/ChevronDown";
 import Radio from "components/icons/Radio";
 import SearchIcon from "components/icons/SearchIcon";
@@ -17,6 +17,8 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
     const activeColor = React.useMemo(() => {
         return brand.isActive ? { background: '#CEF7E2', text: '#1F7B4D' } : { background: '#FAFAFA', text: '#5F5F5F' }
     }, [brand.isActive])
+
+    const [isEditMode, setIsEditMode] = React.useState(false)
 
     return (
         <div className="max-w-[552px]">
@@ -48,8 +50,13 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                         <div className="text-neutral-6 text-sm leading-[22px] font-normal">
                             Brand Name
                         </div>
-                        <div className="text-neutral-8 mt-1 py-[9px] text-sm leading-[22px] font-bold">
-                            {brand.name}
+                        <div className="text-neutral-8 mt-1 text-sm leading-[22px] font-bold">
+                            {isEditMode ? <TextInput classNames={{
+                                input: "py-[9px] px-[14px] text-sm leading-[22px] font-semibold h-[40px]"
+                            }} value={brand.name} placeholder="Enter new brand name" /> :
+                                <div className="py-[9px]">
+                                    {brand.name}
+                                </div>}
                         </div>
                     </div>
 
@@ -59,9 +66,12 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                         </div>
                         <div style={{
                             backgroundColor: activeColor.background,
-                            color: activeColor.text
+                            color: activeColor.text,
+                            cursor: isEditMode ? 'pointer' : undefined
                         }} className="flex items-center gap-2 rounded-full py-[5px] px-3 text-base font-semibold mt-[10px]">
-                            <Radio fill={activeColor.text} /> {brand.isActive ? 'Active' : 'Inactive'}
+                            <Radio fill={activeColor.text} />
+                            {brand.isActive ? 'Active' : 'Inactive'}
+                            {isEditMode && <IconChevronDown width={24} height={24} color="#232323" />}
                         </div>
                     </div>
 
@@ -69,14 +79,26 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                         <div className="text-neutral-6 text-sm leading-[22px] font-normal">
                             Brand Description
                         </div>
-                        <div className="text-neutral-8 mt-1 py-[9px] text-sm leading-[22px] font-bold">
-                            {brand.description}
+                        <div className="text-neutral-8 mt-1 text-sm leading-[22px] font-bold h-[100px]">
+                            {isEditMode ? <Textarea classNames={{
+                                input: "py-[9px] px-[14px] text-sm leading-[22px] font-semibold h-[100px]"
+                            }} value={brand.description} placeholder="Enter new brand name" /> : <div className="py-[9px]">
+                                {brand.description}
+                            </div>}
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            <UnstyledButton className="bg-secondary-main py-[9px] px-4 text-white rounded-[4px] mt-6 text-sm leading-[22px] font-semibold">Edit Information</UnstyledButton>
+            <UnstyledButton onClick={() => {
+                if (!isEditMode) {
+                    setIsEditMode(true)
+                    return
+                }
+
+                setIsEditMode(false)
+            }} className="bg-secondary-main py-[9px] px-4 text-white rounded-[4px] mt-6 text-sm leading-[22px] font-semibold">{isEditMode ? 'Save Changes' : 'Edit Information'}</UnstyledButton>
 
 
         </div>

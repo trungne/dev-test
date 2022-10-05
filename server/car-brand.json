@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "name": "Toyota",
         "description": "Jeep Grand Cherokee",
         "numberOfModels": 1200,
@@ -8,6 +9,7 @@
         "isActive": true
     },
     {
+        "id": 2,
         "name": "BMW",
         "description": "Brand description too long Brand description too long Brand description too long ",
         "numberOfModels": 800,
@@ -16,6 +18,7 @@
         "isActive": false
     },
     {
+        "id": 3,
         "name": "MAZDA",
         "description": "Audi Q7",
         "numberOfModels": 620,
@@ -24,6 +27,7 @@
         "isActive": true
     },
     {
+        "id": 4,
         "name": "Hyundai",
         "description": "Brand description too long Brand description too long Brand description too long ",
         "numberOfModels": 4260,
@@ -32,6 +36,7 @@
         "isActive": false
     },
     {
+        "id": 5,
         "name": "KIA",
         "description": "Dodge Charger",
         "numberOfModels": 620,
@@ -40,6 +45,7 @@
         "isActive": true
     },
     {
+        "id": 6,
         "name": "Nissan",
         "description": "Brand description too long Brand description too long Brand description too long ",
         "numberOfModels": 4260,

@@ -18,6 +18,7 @@ export type FeaturedVehicle = {
 }
 
 export type CarBrand = {
+    id: number,
     name: string,
     description: string,
     numberOfModels: number,
