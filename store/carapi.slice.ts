@@ -5,16 +5,27 @@ import { CarBrand, CarInfo, FeaturedVehicle } from "shared/types";
 export const carAPI = createApi({
     reducerPath: 'carAPI',
     baseQuery: axiosBaseQuery({ baseUrl: NEXT_API_BASE_URL }),
+    tagTypes: ['CarBrands'],
     endpoints: (builder) => ({
         getCarInfo: builder.query<CarInfo[], void>({ query: () => ({ url: 'car', method: 'GET' }) }),
         getFeaturedVehicles: builder.query<FeaturedVehicle[], void>({
             query: () => ({ url: 'feature', method: 'GET' })
         }),
         getCarBrands: builder.query<CarBrand[], void>({
-            query: () => ({ url: 'car-brand', method: 'GET' })
+            query: () => ({ url: 'car-brand', method: 'GET' }),
+            providesTags: (result) =>
+                result ? [
+                    ...result.map(({ id }) => {
+                        return {
+                            type: 'CarBrands' as const,
+                            id
+                        }
+                    })
+                ] : ['CarBrands']
         }),
         updateCarBrands: builder.mutation<string, CarBrand>({
-            query: (brand) => ({ url: 'update-car-brand', method: 'POST', data: brand })
+            query: (brand) => ({ url: 'update-car-brand', method: 'POST', data: brand }),
+            invalidatesTags: (_, __, arg) => [{ type: 'CarBrands', id: arg.id }]
         })
     })
 })
