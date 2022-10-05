@@ -10,7 +10,8 @@ export default class _Document extends Document {
         return (
             <Html>
                 <Head>
-                    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet" />
+                    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;700&display=swap" rel="stylesheet"  type='text/css'/>
+                    <link href='https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;900&display=swap' rel='stylesheet' />
                 </Head>
                 <body>
                     <Main />
