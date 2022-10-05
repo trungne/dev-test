@@ -16,6 +16,7 @@ import { useGetCarBrandsQuery } from "store/carapi.slice";
 import { CarBrand } from "shared/types";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { useDashboardState } from "store/store";
 type MenuButtonProps = {
     label: string,
     active: boolean,
@@ -35,7 +36,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, active, onClick, Icon })
 }
 
 const CarBrandInfo: React.FC<{ brand: CarBrand }> = ({ brand }) => {
-
+    const { viewCarBrandOption } = useDashboardState()
     const activeColor = React.useMemo(() => {
         return brand.isActive ? '#1F7B4D' : '#5F5F5F'
     }, [brand.isActive])
