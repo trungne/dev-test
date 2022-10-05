@@ -12,6 +12,9 @@ export const carAPI = createApi({
         }),
         getCarBrands: builder.query<CarBrand[], void>({
             query: () => ({ url: 'car-brand', method: 'GET' })
+        }),
+        updateCarBrands: builder.mutation<string, CarBrand>({
+            query: (brand) => ({ url: 'update-car-brand', method: 'POST', data: brand })
         })
     })
 })
@@ -20,5 +23,6 @@ export const carAPI = createApi({
 export const {
     useGetCarInfoQuery,
     useGetFeaturedVehiclesQuery,
-    useGetCarBrandsQuery
+    useGetCarBrandsQuery,
+    useUpdateCarBrandsMutation
 } = carAPI

@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import React from "react";
 import { CarBrand } from "shared/types";
-import { useGetCarBrandsQuery } from "store/carapi.slice";
+import { useGetCarBrandsQuery, useUpdateCarBrandsMutation } from "store/carapi.slice";
 import { setViewOption } from "store/dashboard.slice";
 import { useAppDispatch, useDashboardState } from "store/store";
 import styles from './style.module.css'
@@ -160,6 +160,7 @@ const CommonBrandDetail: React.FC<{ brand?: CarBrand, isEditMode: boolean }> = (
 
 const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ brand, back }) => {
     const [isEditMode, setIsEditMode] = React.useState(!brand)
+    const [updateCarBrand, { }] = useUpdateCarBrandsMutation()
 
     return (
         <div className="max-w-[600px]">

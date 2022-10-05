@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "name": "Toyota",
+        "description": "Jeep Grand Cherokee",
+        "numberOfModels": 1200,
+        "logoURL": "https://d234qyqqy4qdru.cloudfront.net/car_brand_toyota.png",
+        "lastUpdate": 1671901200000,
+        "isActive": true
+    },
+    {
+        "id": 2,
+        "name": "BMW",
+        "description": "Brand description too long Brand description too long Brand description too long ",
+        "numberOfModels": 800,
+        "logoURL": "https://d234qyqqy4qdru.cloudfront.net/car_brand_bmw.png",
+        "lastUpdate": 1671901200000,
+        "isActive": false
+    },
+    {
+        "id": 3,
+        "name": "MAZDA",
+        "description": "Audi Q7",
+        "numberOfModels": 620,
+        "logoURL": "https://d234qyqqy4qdru.cloudfront.net/car_brand_mazda.png",
+        "lastUpdate": 1671901200000,
+        "isActive": true
+    },
+    {
+        "id": 4,
+        "name": "Hyundai",
+        "description": "Brand description too long Brand description too long Brand description too long ",
+        "numberOfModels": 4260,
+        "logoURL": "https://d234qyqqy4qdru.cloudfront.net/car_brand_hyundai.png",
+        "lastUpdate": 1671901200000,
+        "isActive": false
+    },
+    {
+        "id": 5,
+        "name": "KIA",
+        "description": "Dodge Charger",
+        "numberOfModels": 620,
+        "logoURL": "https://d234qyqqy4qdru.cloudfront.net/car_brand_kia.png",
+        "lastUpdate": 1671901200000,
+        "isActive": true
+    },
+    {
+        "id": 6,
+        "name": "Nissan",
+        "description": "Brand description too long Brand description too long Brand description too long ",
+        "numberOfModels": 4260,
+        "logoURL": "https://d234qyqqy4qdru.cloudfront.net/car_brand_nissan.png",
+        "lastUpdate": 1671901200000,
+        "isActive": false
+    }
+]
