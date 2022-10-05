@@ -4,18 +4,17 @@ import Instruction from 'components/Instruction'
 
 import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
 import Head from 'next/head'
-import dynamic from 'next/dynamic'
 
 import vehicleTypeJSON from 'components/SearchArea/vehicle-type.json'
 import AskSection from 'components/AskSection'
 import Footer from 'components/Footer'
 import About from 'components/About'
-import { store } from 'store/store'
 
 import { carAPI } from 'store/carapi.slice'
 import CarList from 'components/CarList'
 import { CarInfo, FeaturedVehicle } from 'shared/types'
 
+import { wrapper } from 'store/store'
 import carDataJSON from 'server/car.json'
 import featuredVehicleJSON from 'server/featured-vehicle.json'
 import Feature from 'components/Feature'
@@ -27,12 +26,14 @@ type ServerSideProps = {
   carData: CarInfo[],
   featuredVehicles: FeaturedVehicle[]
 }
-export const getServerSideProps: GetServerSideProps<ServerSideProps> = async ({ req, query }) => {
+
+export const getServerSideProps: GetServerSideProps<ServerSideProps> = wrapper.getServerSideProps(store => async ({ req }) => {
   // await store.dispatch(carAPI.endpoints.getCarInfo.initiate())
   // await store.dispatch(carAPI.endpoints.getFeaturedVehicles.initiate())
   if (req.headers['user-agent']) {
     store.dispatch(setIsMobile(detectMobile(req.headers['user-agent'])))
   }
+
   return {
     props: {
       vehicleTypes: vehicleTypeJSON,
@@ -40,7 +41,7 @@ export const getServerSideProps: GetServerSideProps<ServerSideProps> = async ({ 
       featuredVehicles: featuredVehicleJSON
     },
   }
-}
+})
 
 
 const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ vehicleTypes, carData, featuredVehicles }) => {
