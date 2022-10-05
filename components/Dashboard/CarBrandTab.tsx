@@ -1,6 +1,7 @@
-import { Popover, UnstyledButton, TextInput, Divider, Radio } from "@mantine/core";
-import { IconPlus, IconPoint } from "@tabler/icons";
+import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio } from "@mantine/core";
+import { IconPlus, IconPoint, IconChevronLeft } from "@tabler/icons";
 import ChevronDown from "components/icons/ChevronDown";
+import Radio from "components/icons/Radio";
 import SearchIcon from "components/icons/SearchIcon";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -11,7 +12,78 @@ import { setViewOption } from "store/dashboard.slice";
 import { useAppDispatch, useDashboardState } from "store/store";
 import styles from './style.module.css'
 
-const CarBrandInfo: React.FC<{ brand: CarBrand }> = ({ brand }) => {
+
+const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand, back }) => {
+    const activeColor = React.useMemo(() => {
+        return brand.isActive ? { background: '#CEF7E2', text: '#1F7B4D' } : { background: '#FAFAFA', text: '#5F5F5F' }
+    }, [brand.isActive])
+
+    return (
+        <div className="max-w-[552px]">
+            <div className="flex items-center gap-2 ">
+                <IconChevronLeft onClick={back} className="cursor-pointer" color="#232323" width={24} height={24} />
+                <span className="text-primary-dark-1 text-[24px] leading-[32px] font-bold">Brand Details</span>
+            </div>
+
+            <div>
+                <div className="mt-6 py-4 text-sm leading-6 text-neutral-8 font-bold">
+                    Brand Logo
+                </div>
+
+                <Divider />
+
+                <div className="mt-4 relative w-[120px] h-[120px]">
+                    <Image src={brand.logoURL} alt="brand logo" layout="fill" />
+                </div>
+            </div>
+
+
+            <div>
+                <div className="mt-6 py-4 text-sm leading-6 text-neutral-8 font-bold">
+                    Brand Details
+                </div>
+                <Divider />
+                <div className="flex flex-wrap">
+                    <div className='mr-0 md:mr-8 basis-60 mt-4'>
+                        <div className="text-neutral-6 text-sm leading-[22px] font-normal">
+                            Brand Name
+                        </div>
+                        <div className="text-neutral-8 mt-1 py-[9px] text-sm leading-[22px] font-bold">
+                            {brand.name}
+                        </div>
+                    </div>
+
+                    <div className='basis-28 mt-4'>
+                        <div className="text-neutral-6 text-sm leading-[22px] font-normal">
+                            Brand Status
+                        </div>
+                        <div style={{
+                            backgroundColor: activeColor.background,
+                            color: activeColor.text
+                        }} className="flex items-center gap-2 rounded-full py-[5px] px-3 text-base font-semibold mt-[10px]">
+                            <Radio fill={activeColor.text} /> {brand.isActive ? 'Active' : 'Inactive'}
+                        </div>
+                    </div>
+
+                    <div className="basis-full mt-4">
+                        <div className="text-neutral-6 text-sm leading-[22px] font-normal">
+                            Brand Description
+                        </div>
+                        <div className="text-neutral-8 mt-1 py-[9px] text-sm leading-[22px] font-bold">
+                            {brand.description}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <UnstyledButton className="bg-secondary-main py-[9px] px-4 text-white rounded-[4px] mt-6 text-sm leading-[22px] font-semibold">Edit Information</UnstyledButton>
+
+
+        </div>
+    )
+}
+
+const CarBrandInfo: React.FC<{ brand: CarBrand, viewCarBrand: () => void }> = ({ brand, viewCarBrand }) => {
     const { viewCarBrandOption } = useDashboardState()
     const activeColor = React.useMemo(() => {
         return brand.isActive ? '#1F7B4D' : '#5F5F5F'
@@ -19,7 +91,7 @@ const CarBrandInfo: React.FC<{ brand: CarBrand }> = ({ brand }) => {
     return (
         <div className="flex px-6 py-[30px] items-center flex-wrap">
             <div className="flex items-center min-w-[600px] max-w-[600px]">
-                <Radio value={brand.name} />
+                <MantineRadio value={brand.name} />
 
                 <div className="mx-10 relative w-[64px] h-[64px]">
                     <Image alt="logo" layout="fill" src={brand.logoURL} />
@@ -69,7 +141,9 @@ const CarBrandInfo: React.FC<{ brand: CarBrand }> = ({ brand }) => {
                     }}>{brand.isActive ? 'Active' : 'Inactive'}</span>
                 </div>
 
-                <UnstyledButton className="bg-white 
+                <UnstyledButton
+                    onClick={viewCarBrand}
+                    className="bg-white 
                 ml-auto
                 rounded-[4px]
                 !border-solid border border-neutral-5
@@ -98,7 +172,8 @@ const getViewOptionLabel = (viewOption: Parameters<typeof setViewOption>['0']) =
 
 }
 
-const CarBrandTab: React.FC = () => {
+
+const CarBrandList: React.FC<{ viewCarBrand: (carBrand: CarBrand) => void }> = ({ viewCarBrand }) => {
     const { data: carBrands } = useGetCarBrandsQuery()
     const dispatch = useAppDispatch()
     const { viewCarBrandOption } = useDashboardState()
@@ -116,7 +191,7 @@ const CarBrandTab: React.FC = () => {
     }
 
     return (
-        <div className="py-[30px] px-[42px] font-['Poppins']">
+        <>
             <div id="car-brand-list-header" className="flex items-center flex-wrap">
                 <div className="flex py-1 gap-2 items-center">
                     <span className="text-primary-dark-1 text-[24px] leading-[32px] font-semibold">CAR BRANDS LIST</span>
@@ -167,8 +242,19 @@ const CarBrandTab: React.FC = () => {
                     }
 
                     return brand.name.toLowerCase().includes(searchText.toLowerCase())
-                }).map((brand, idx) => <CarBrandInfo key={brand.name + idx} brand={brand} />)}
+                }).map((brand, idx) => <CarBrandInfo key={brand.name + idx} brand={brand} viewCarBrand={() => viewCarBrand(brand)} />)}
             </div>
+        </>
+    )
+}
+
+const CarBrandTab: React.FC = () => {
+    const [selectedCarBrand, setSelectedCarBrand] = React.useState<CarBrand>()
+    return (
+        <div className="py-[30px] px-[42px] font-['Poppins']">
+            {selectedCarBrand ? <CarBrandDetail back={() => setSelectedCarBrand(undefined)} brand={selectedCarBrand} /> :
+                <CarBrandList viewCarBrand={(brand) => setSelectedCarBrand(brand)} />
+            }
         </div>
     )
 }
