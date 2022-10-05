@@ -13,12 +13,16 @@ import { useAppDispatch, useDashboardState } from "store/store";
 import styles from './style.module.css'
 
 
-const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand, back }) => {
-    const activeColor = React.useMemo(() => {
-        return brand.isActive ? { background: '#CEF7E2', text: '#1F7B4D' } : { background: '#FAFAFA', text: '#5F5F5F' }
-    }, [brand.isActive])
 
-    const [isEditMode, setIsEditMode] = React.useState(false)
+const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ brand, back }) => {
+    const activeColor = React.useMemo(() => {
+        if (brand === undefined) {
+            return { background: '#CEF7E2', text: '#1F7B4D' } // assume active
+        }
+        return brand.isActive ? { background: '#CEF7E2', text: '#1F7B4D' } : { background: '#FAFAFA', text: '#5F5F5F' }
+    }, [brand])
+
+    const [isEditMode, setIsEditMode] = React.useState(!brand)
     const [opened, setOpened] = React.useState(false)
 
     return (
@@ -36,13 +40,18 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                 <Divider />
 
                 <div className="mt-4 relative w-[120px] h-[120px]">
-                    {isEditMode && <div className="absolute cursor-pointer px-4 flex items-center justify-center rounded-full
+                    {isEditMode && brand && <div className="absolute cursor-pointer px-4 flex items-center justify-center rounded-full
                     w-full h-full left-0 top-0 bg-neutral-8 opacity-0 hover:opacity-80 z-10
                     text-base text-white text-center
                     ">
                         CHANGE LOGO
                     </div>}
-                    <Image src={brand.logoURL} alt="brand logo" layout="fill" />
+                    {!brand &&
+                        <div className="flex flex-col cursor-pointer rounded-full items-center justify-center w-full h-full outline-dashed outline-neutral-4 bg-neutral-2">
+                            <IconPlus width={32} height={32} color="#232323" />
+                            <div className="mt-1 text-neutral-6 text-xs leading-5 font-bold">Brand Logo</div>
+                        </div>}
+                    {brand && <Image src={brand.logoURL} alt="brand logo" layout="fill" />}
                 </div>
             </div>
 
@@ -60,9 +69,9 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                         <div className="text-neutral-8 mt-1 text-sm leading-[22px] font-bold">
                             {isEditMode ? <TextInput classNames={{
                                 input: "py-[9px] px-[14px] text-sm leading-[22px] font-semibold h-[40px]"
-                            }} value={brand.name} placeholder="Enter new brand name" /> :
+                            }} value={brand?.name} placeholder="Enter new brand name" /> :
                                 <div className="py-[9px]">
-                                    {brand.name}
+                                    {brand?.name}
                                 </div>}
                         </div>
                     </div>
@@ -81,7 +90,7 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                                         cursor: isEditMode ? 'pointer' : undefined
                                     }} className="flex items-center gap-2 rounded-full py-[5px] px-3 text-base font-semibold mt-[10px]">
                                     <Radio fill={activeColor.text} />
-                                    {brand.isActive ? 'Active' : 'Inactive'}
+                                    {!brand ? 'Active' : brand.isActive ? 'Active' : 'Inactive'}
                                     {isEditMode && <IconChevronDown width={24} height={24} color="#232323" />}
                                 </div>
                             </Popover.Target>
@@ -111,8 +120,8 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                         <div className="text-neutral-8 mt-1 text-sm leading-[22px] font-bold h-[100px]">
                             {isEditMode ? <Textarea classNames={{
                                 input: "py-[9px] px-[14px] text-sm leading-[22px] font-semibold h-[100px]"
-                            }} value={brand.description} placeholder="Enter new brand name" /> : <div className="py-[9px]">
-                                {brand.description}
+                            }} value={brand?.description} placeholder="Enter new brand name" /> : <div className="py-[9px]">
+                                {brand?.description}
                             </div>}
 
                         </div>
@@ -128,8 +137,6 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
 
                 setIsEditMode(false)
             }} className="bg-secondary-main py-[9px] px-4 text-white rounded-[4px] mt-6 text-sm leading-[22px] font-semibold">{isEditMode ? 'Save Changes' : 'Edit Information'}</UnstyledButton>
-
-
         </div>
     )
 }
@@ -303,7 +310,7 @@ const CarBrandTab: React.FC = () => {
     const [selectedCarBrand, setSelectedCarBrand] = React.useState<CarBrand>()
     return (
         <div className="py-[30px] px-[42px] font-['Poppins']">
-            {selectedCarBrand ? <CarBrandDetail back={() => setSelectedCarBrand(undefined)} brand={selectedCarBrand} /> :
+            {selectedCarBrand ? <CarBrandDetail back={() => setSelectedCarBrand(undefined)} /> :
                 <CarBrandList viewCarBrand={(brand) => setSelectedCarBrand(brand)} />
             }
         </div>
