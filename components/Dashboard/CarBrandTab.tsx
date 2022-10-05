@@ -19,6 +19,7 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
     }, [brand.isActive])
 
     const [isEditMode, setIsEditMode] = React.useState(false)
+    const [opened, setOpened] = React.useState(false)
 
     return (
         <div className="max-w-[552px]">
@@ -35,6 +36,12 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                 <Divider />
 
                 <div className="mt-4 relative w-[120px] h-[120px]">
+                    {isEditMode && <div className="absolute cursor-pointer px-4 flex items-center justify-center rounded-full
+                    w-full h-full left-0 top-0 bg-neutral-8 opacity-0 hover:opacity-80 z-10
+                    text-base text-white text-center
+                    ">
+                        CHANGE LOGO
+                    </div>}
                     <Image src={brand.logoURL} alt="brand logo" layout="fill" />
                 </div>
             </div>
@@ -64,15 +71,37 @@ const CarBrandDetail: React.FC<{ brand: CarBrand, back: () => void }> = ({ brand
                         <div className="text-neutral-6 text-sm leading-[22px] font-normal">
                             Brand Status
                         </div>
-                        <div style={{
-                            backgroundColor: activeColor.background,
-                            color: activeColor.text,
-                            cursor: isEditMode ? 'pointer' : undefined
-                        }} className="flex items-center gap-2 rounded-full py-[5px] px-3 text-base font-semibold mt-[10px]">
-                            <Radio fill={activeColor.text} />
-                            {brand.isActive ? 'Active' : 'Inactive'}
-                            {isEditMode && <IconChevronDown width={24} height={24} color="#232323" />}
-                        </div>
+                        <Popover opened={opened} onChange={setOpened}>
+                            <Popover.Target>
+                                <div
+                                    onClick={() => { setOpened(o => !o) }}
+                                    style={{
+                                        backgroundColor: activeColor.background,
+                                        color: activeColor.text,
+                                        cursor: isEditMode ? 'pointer' : undefined
+                                    }} className="flex items-center gap-2 rounded-full py-[5px] px-3 text-base font-semibold mt-[10px]">
+                                    <Radio fill={activeColor.text} />
+                                    {brand.isActive ? 'Active' : 'Inactive'}
+                                    {isEditMode && <IconChevronDown width={24} height={24} color="#232323" />}
+                                </div>
+                            </Popover.Target>
+                            <Popover.Dropdown p="xs">
+                                <div className="flex flex-col justify-center gap-3">
+                                    <div
+                                        className="cursor-pointer py-[5px] px-3 flex items-center gap-2 rounded-full text-base font-semibold text-primary-dark-3 bg-primary-light-1">
+                                        <Radio fill="#1F7B4D" />
+                                        Active
+                                    </div>
+
+                                    <div
+                                        className="cursor-pointer py-[5px] px-3 flex items-center gap-2 rounded-full text-base font-semibold text-neutral-7 bg-neutral-2">
+                                        <Radio fill="#5F5F5F" />
+                                        Inactive
+                                    </div>
+                                </div>
+                            </Popover.Dropdown>
+                        </Popover>
+
                     </div>
 
                     <div className="basis-full mt-4">
