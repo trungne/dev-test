@@ -40,8 +40,8 @@ export default function handler(
         res.status(200).json({ data: { id: newCarBrandData.id }, msg: 'success' })
         return
     }
-    catch {
-        res.status(500).end('Cannot update!')
+    catch (e) {
+        res.status(500).end(`Cannot update! ${JSON.stringify(e)}`)
         return
     }
 }
