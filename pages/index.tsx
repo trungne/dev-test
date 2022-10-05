@@ -19,15 +19,20 @@ import { CarInfo, FeaturedVehicle } from 'shared/types'
 import carDataJSON from 'server/car.json'
 import featuredVehicleJSON from 'server/featured-vehicle.json'
 import Feature from 'components/Feature'
+import { detectMobile } from 'shared/utils'
+import { setIsMobile } from 'store/app.slice'
 
 type ServerSideProps = {
   vehicleTypes: Record<string, string>,
   carData: CarInfo[],
   featuredVehicles: FeaturedVehicle[]
 }
-export const getServerSideProps: GetServerSideProps<ServerSideProps> = async () => {
+export const getServerSideProps: GetServerSideProps<ServerSideProps> = async ({ req, query }) => {
   // await store.dispatch(carAPI.endpoints.getCarInfo.initiate())
   // await store.dispatch(carAPI.endpoints.getFeaturedVehicles.initiate())
+  if (req.headers['user-agent']) {
+    store.dispatch(setIsMobile(detectMobile(req.headers['user-agent'])))
+  }
   return {
     props: {
       vehicleTypes: vehicleTypeJSON,
