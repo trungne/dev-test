@@ -17,6 +17,15 @@ export type FeaturedVehicle = {
     price: number
 }
 
+export type CarBrand = {
+    name: string,
+    description: string,
+    numberOfModels: number,
+    logoURL: string,
+    lastUpdate: number,
+    isActive: boolean,
+}
+
 export type AxiosBaseQueryResponse<Data> = {
     data: Data,
     msg: string,
