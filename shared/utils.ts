@@ -21,3 +21,7 @@ export const detectMobile = (userAgent: string) => {
         return userAgent.match(toMatchItem);
     });
 }
+
+export const formatCurrency = (currency: number, separator: string) => {
+    return currency.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator)
+}
