@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { AxiosBaseQueryResponse, CarBrand } from 'shared/types'
 import fs from 'fs'
+import path from 'path'
 
 export default function handler(
     req: NextApiRequest,
@@ -16,8 +17,9 @@ export default function handler(
         res.status(400).end('Bad request!')
         return
     }
+    const jsonPath = path.join(process.cwd(), 'server/car-brand.json')
 
-    const fileData = fs.readFileSync('server/car-brand.json', 'utf-8')
+    const fileData = fs.readFileSync(jsonPath, 'utf-8')
     const jsonData = JSON.parse(fileData) as CarBrand[]
 
     if (!jsonData || Object.keys(jsonData).length === 0) {
@@ -34,7 +36,7 @@ export default function handler(
     jsonData.push(newCarBrandData)
 
     try {
-        fs.writeFileSync('server/car-brand.json', JSON.stringify(jsonData))
+        fs.writeFileSync(jsonPath, JSON.stringify(jsonData))
         res.status(200).json({ data: { id: newCarBrandData.id }, msg: 'success' })
         return
     }
