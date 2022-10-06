@@ -1,4 +1,4 @@
-import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio, Modal } from "@mantine/core";
+import { Popover, UnstyledButton, TextInput, Divider, Radio as MantineRadio, Modal, LoadingOverlay } from "@mantine/core";
 import { IconPlus, IconPoint, IconChevronLeft, IconX } from "@tabler/icons";
 import ChevronDown from "components/icons/ChevronDown";
 import SearchIcon from "components/icons/SearchIcon";
@@ -230,9 +230,11 @@ const CarBrandList: React.FC<{ viewCarBrand: (carBrand: CarBrand) => void }> = (
 
 const CarBrandTab: React.FC = () => {
     const [selectedCarBrand, setSelectedCarBrand] = React.useState<CarBrand>()
+    const { isFetching } = useGetCarBrandsQuery()
 
     return (
-        <CommonTab>
+        <CommonTab className="relative">
+            <LoadingOverlay visible={isFetching} />
             {selectedCarBrand ? <CarBrandDetail back={() => setSelectedCarBrand(undefined)} brand={selectedCarBrand} /> :
                 <CarBrandList viewCarBrand={(brand) => setSelectedCarBrand(brand)} />
             }
