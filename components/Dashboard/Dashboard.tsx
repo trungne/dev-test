@@ -97,12 +97,12 @@ const Dashboard: React.FC = () => {
             </nav>
             <div className="grow max-h-screen overflow-y-auto scrollbar-hide">
                 <div className="flex items-center justify-end py-4 px-6 gap-4">
-                    <Info />
-                    <Bell />
+                    <Info className="cursor-pointer" />
+                    <Bell className="cursor-pointer" />
                     <div className="flex items-center">
-                        <Avatar radius="xl" classNames={{ root: "h-[32px] w-[32px] aspect-square" }} className="mr-2" />
-                        <span className="mr-3">Admin</span>
-                        <ChevronDown />
+                        <Avatar radius="xl" classNames={{ root: "h-[32px] w-[32px] aspect-square" }} className="cursor-pointer mr-2" />
+                        <span className="mr-3 cursor-pointer">Admin</span>
+                        <ChevronDown className="cursor-pointer" />
                     </div>
                 </div>
                 <Divider />
