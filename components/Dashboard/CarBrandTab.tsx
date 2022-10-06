@@ -29,9 +29,7 @@ const AddCarBrandModal: React.FC<{ opened: boolean, onClose: () => void }> = ({ 
             </div>
             <Divider />
             <div className="p-6">
-                <CommonBrandDetail mode='create' onCreate={onClose} onClose={onClose} />
-
-
+                <CommonBrandDetail mode='create' onClickCreate={onClose} onClose={onClose} />
             </div>
         </Modal>
     )
@@ -43,15 +41,15 @@ type CommonBrandDetailProps = {
     brand?: CarBrand
     mode: Mode
     onClose?: () => void
-    onEdit?: () => void
-    onCreate?: () => void
+    onClickCreate?: () => void
+    onClickEditInformation?: () => void
+    onClickSaveChanges?: () => void
 }
-const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onClose, onCreate, onEdit }) => {
-    const [opened, setOpened] = React.useState(false)
+const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onClose, onClickCreate, onClickEditInformation, onClickSaveChanges }) => {
+    const [openedEditStatusPopover, setOpenedEditStatusPopover] = React.useState(false)
 
-
-    const [updateCarBrand] = useUpdateCarBrandsMutation()
-    const [createCarBrand] = useCreateCarBrandsMutation()
+    const [update] = useUpdateCarBrandsMutation()
+    const [create] = useCreateCarBrandsMutation()
 
     // assume active
     const [newCarBrand, setNewCarBrand] = React.useState<Partial<CarBrand>>(mode === 'create' ? { ...brand, isActive: true } : { ...brand })
@@ -68,6 +66,41 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
             }
         })
     }, [])
+
+    const updateCarBrand = React.useCallback(async () => {
+        let canEdit = true
+        Object.keys(newCarBrand).forEach(key => {
+            if (newCarBrand[key as keyof CarBrand] === undefined) {
+                canEdit = false
+            }
+        })
+
+        if (canEdit) {
+            // @ts-ignore
+            await update(newCarBrand)
+        }
+
+        onClickSaveChanges?.()
+    }, [onClickSaveChanges, update, newCarBrand])
+
+    const createCarBrand = React.useCallback(async () => {
+        const { name, description, isActive, logoURL } = newCarBrand
+        if (name === undefined || description === undefined || isActive === undefined || logoURL === undefined) {
+            console.error('cannot create new brand!')
+            return
+        }
+        const newBrand: Omit<CarBrand, 'id'> = {
+            name: name,
+            description: description,
+            isActive: isActive,
+            logoURL: logoURL,
+            numberOfModels: 0,
+            lastUpdate: new Date().getTime() // now
+        }
+        await create(newBrand)
+        onClickCreate?.()
+
+    }, [create, newCarBrand, onClickCreate])
     return (
         <>
             <div className="py-3 text-sm leading-6 text-neutral-8 font-bold">
@@ -123,7 +156,7 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                     <div className="text-neutral-6 text-sm leading-[22px] font-normal">
                         Brand Status
                     </div>
-                    <Popover opened={opened} onChange={setOpened}>
+                    <Popover opened={openedEditStatusPopover} onChange={setOpenedEditStatusPopover}>
                         <Popover.Target>
                             <div
                                 onClick={() => {
@@ -131,7 +164,7 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                                         return
                                     }
 
-                                    setOpened(o => !o)
+                                    setOpenedEditStatusPopover(o => !o)
                                 }}
                                 style={{
                                     backgroundColor: activeColor.background,
@@ -148,7 +181,7 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                                 <div
                                     onClick={() => {
                                         setNewCarBrand(prev => { return { ...prev, isActive: true } })
-                                        setOpened(o => !o)
+                                        setOpenedEditStatusPopover(o => !o)
                                     }}
                                     className="cursor-pointer py-[5px] px-3 flex items-center gap-2 rounded-full text-base font-semibold text-primary-dark-3 bg-primary-light-1">
                                     <Radio fill="#1F7B4D" />
@@ -158,7 +191,7 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                                 <div
                                     onClick={() => {
                                         setNewCarBrand(prev => { return { ...prev, isActive: false } })
-                                        setOpened(o => !o)
+                                        setOpenedEditStatusPopover(o => !o)
                                     }}
                                     className="cursor-pointer py-[5px] px-3 flex items-center gap-2 rounded-full text-base font-semibold text-neutral-7 bg-neutral-2">
                                     <Radio fill="#5F5F5F" />
@@ -196,45 +229,12 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
                 bg-transparent 
                 outline outline-1 outline-neutral-5 
                 text-neutral-8 text-sm leading-[22px] font-medium">Cancel</UnstyledButton>
-                <UnstyledButton onClick={() => {
-                    onCreate?.()
-                    const { name, description, isActive, logoURL } = newCarBrand
-                    if (name === undefined || description === undefined || isActive === undefined || logoURL === undefined) {
-                        console.error('cannot create new brand!')
-                        return
-                    }
-                    const newBrand: Omit<CarBrand, 'id'> = {
-                        name: name,
-                        description: description,
-                        isActive: isActive,
-                        logoURL: logoURL,
-                        numberOfModels: 0,
-                        lastUpdate: new Date().getTime() // now
-                    }
-                    createCarBrand(newBrand)
-                }} className="rounded-[4px] py-[9px] px-4 bg-secondary-main 
+                <UnstyledButton onClick={createCarBrand} className="rounded-[4px] py-[9px] px-4 bg-secondary-main 
                 text-white text-sm leading-[22px] font-medium">Create Brand</UnstyledButton>
             </div>}
 
-            {mode !== 'create' && <UnstyledButton onClick={() => {
-                if (mode === 'edit') {
-                    onEdit?.()
-                    let canEdit = true
-                    Object.keys(newCarBrand).forEach(key => {
-                        if (newCarBrand[key as keyof CarBrand] === undefined) {
-                            canEdit = false
-                        }
-                    })
-
-                    if (canEdit) {
-                        // @ts-ignore
-                        updateCarBrand(newCarBrand)
-                    }
-                }
-                else {
-                    onClose?.()
-                }
-            }} className="bg-secondary-main py-[9px] px-4 text-white rounded-[4px] mt-6 text-sm leading-[22px] font-semibold">{mode === 'edit' ? 'Save Changes' : 'Edit Information'}</UnstyledButton>}
+            {mode === 'edit' && <UnstyledButton onClick={updateCarBrand} className="bg-secondary-main py-[9px] px-4 text-white rounded-[4px] mt-6 text-sm leading-[22px] font-semibold">Save Changes</UnstyledButton>}
+            {mode === 'read' && <UnstyledButton onClick={onClickEditInformation} className="bg-secondary-main py-[9px] px-4 text-white rounded-[4px] mt-6 text-sm leading-[22px] font-semibold">Edit Informaiton</UnstyledButton>}
         </>
     )
 }
@@ -250,8 +250,8 @@ const CarBrandDetail: React.FC<{ brand?: CarBrand, back: () => void }> = ({ bran
             </div>
             <div className="mt-4">
                 <CommonBrandDetail brand={brand} mode={mode}
-                    onClose={() => setMode('edit')}
-                    onEdit={() => setMode('read')}
+                    onClickEditInformation={() => setMode('edit')}
+                    onClickSaveChanges={() => setMode('read')}
                 />
             </div>
 
