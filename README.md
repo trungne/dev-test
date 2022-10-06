@@ -37,4 +37,13 @@ There are two pages:
 - Responsive on every screen size
 - Lazy load images
 - Load background image based on device screen (mobile or pc)
-- 
+- Search for vehicle based on *price range*. I do not have information regarding *New/Used* or *Vehicle Type* so the search function will not base on those metrics. 
+
+#### Dashboard:
+- Responsive on every screen size
+- Hide and show menu
+- Other menu besides *Car Brand* can also be selected.
+- Sort brands list based on property (Last Update/Brand Name/Number of Models)
+- Search car brand
+- View details
+- **Only on local**: Add/Update brand. You can observe that the json file (`server/car-brand.json`) is updated when a new brand is updated or added. The reason this is not viable in production is Vercel only allow read access.
