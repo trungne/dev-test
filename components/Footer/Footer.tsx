@@ -22,7 +22,7 @@ const MobileAccordion: React.FC = () => {
             <Accordion classNames={{
                 label: "font-bold text-sm leading-[24px]",
                 control: 'px-0 py-4',
-            }} variant="filled" defaultValue="About">
+            }} variant="filled" >
                 <Divider />
 
                 <Accordion.Item value="About">
