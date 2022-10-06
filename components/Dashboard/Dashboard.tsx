@@ -40,44 +40,57 @@ const SETTING_MENU: Menu = { name: 'Setting', value: 'setting', Icon: Setting }
 
 const Dashboard: React.FC = () => {
     const [currentTab, setCurrentTab] = React.useState<Menu['value']>('car-brand')
-
+    const [hideMenu, setHideMenu] = React.useState(false)
     return (
         <div className="flex">
-            <nav className="bg-[#323435] font-['Source_Sans_Pro'] min-h-screen flex-1 min-w-[240px] max-w-[240px] px-4 py-6 flex flex-col">
+            <nav style={{
+                width: hideMenu ? 100 : 240
+            }} id='dashboard-menu' className="transition-all bg-[#323435] font-['Source_Sans_Pro'] min-h-screen flex-1 max-w-[240px] px-4 py-6 flex flex-col">
                 <div className="flex items-center justify-between">
-                    <Link href="/" passHref>
+                    {!hideMenu && <Link href="/" passHref>
                         <a>
                             <UCarIcon className="cursor-pointer" width={102.91} height={28.07} />
                         </a>
-                    </Link>
-                    <MenuIcon className="cursor-pointer" />
+                    </Link>}
+                    <MenuIcon style={{
+                        ...(hideMenu && {margin: '0px auto'})
+                    }} onClick={() => {
+                        setHideMenu(prev => !prev)
+                    }} className="cursor-pointer" />
                 </div>
-                <div className="flex flex-col grow overflow-y-scroll scrollbar-hide mt-11">
-                    {MENU_LIST.map(menu => {
-                        if (menu.subMenu) {
-                            return <MenuButtonGroup
-                                key={menu.value}
-                                label={menu.name}
-                                active={menu.value === currentTab || menu.subMenu.findIndex(item => item.value === currentTab) !== -1}
-                                onClick={() => setCurrentTab(menu.value)}
-                                onSetTab={(tab) => {
-                                    setCurrentTab(tab)
-                                }}
-                                Icon={menu.Icon}
-                                subMenus={menu.subMenu}
-                            />
-                        }
+                {!hideMenu &&
+                    <>
+                        <div className="flex flex-col grow overflow-y-scroll scrollbar-hide mt-11">
+                            {MENU_LIST.map(menu => {
+                                if (menu.subMenu) {
+                                    return <MenuButtonGroup
+                                        key={menu.value}
+                                        label={menu.name}
+                                        active={menu.value === currentTab || menu.subMenu.findIndex(item => item.value === currentTab) !== -1}
+                                        onClick={() => setCurrentTab(menu.value)}
+                                        onSetTab={(tab) => {
+                                            setCurrentTab(tab)
+                                        }}
+                                        Icon={menu.Icon}
+                                        subMenus={menu.subMenu}
+                                    />
+                                }
 
-                        return <MenuButton
-                            key={menu.value}
-                            active={menu.value === currentTab}
-                            label={menu.name}
-                            Icon={menu.Icon}
-                            onClick={() => setCurrentTab(menu.value)} />
-                    })}
-                </div>
-                <Divider />
-                <MenuButton key={'setting menu'} label={SETTING_MENU.name} Icon={SETTING_MENU.Icon} onClick={() => { setCurrentTab(SETTING_MENU.value) }} active={currentTab === SETTING_MENU.value} />
+                                return <MenuButton
+                                    key={menu.value}
+                                    active={menu.value === currentTab}
+                                    label={menu.name}
+                                    Icon={menu.Icon}
+                                    onClick={() => setCurrentTab(menu.value)} />
+                            })}
+                        </div>
+
+                        <Divider />
+                        <MenuButton key={'setting menu'} label={SETTING_MENU.name} Icon={SETTING_MENU.Icon} onClick={() => { setCurrentTab(SETTING_MENU.value) }} active={currentTab === SETTING_MENU.value} />
+                    </>
+                }
+
+
             </nav>
             <div className="grow max-h-screen overflow-y-auto scrollbar-hide">
                 <div className="flex items-center justify-end py-4 px-6 gap-4">
