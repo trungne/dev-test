@@ -41,6 +41,10 @@ const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
     xl:max-w-[1242px]
     ">
                     <>{Array.from(new Array(filteredCars.length + 1)).map((_, idx) => {
+                        if (filteredCars.length === 0){
+                            return null
+                        }
+
                         if (idx === idxToRenderAds) {
                             return <AdvertiseCard key={"advertise"} imageSrc={getCDNImage('car_ad.png')} />
                         }
