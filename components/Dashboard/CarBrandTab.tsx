@@ -64,7 +64,7 @@ const CommonBrandDetail: React.FC<CommonBrandDetailProps> = ({ brand, mode, onCl
         setNewCarBrand(prev => {
             return {
                 ...prev,
-                logoURL: 'https://d234qyqqy4qdru.cloudfront.net/car_brand_toyota.png'
+                logoURL: 'https://d234qyqqy4qdru.cloudfront.net/car_brand_toyota.png' // assume logo
             }
         })
     }, [])
