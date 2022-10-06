@@ -15,9 +15,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Production
 You can access the production site through these domains:
-[dev-test-trungnguyenhoang.vercel.app](dev-test-trungnguyenhoang.vercel.app)
-[dev-test-git-main-trungnguyenhoang.vercel.app](dev-test-git-main-trungnguyenhoang.vercel.app)
-[dev-test-red.vercel.app](dev-test-red.vercel.app)
+- [dev-test-trungnguyenhoang.vercel.app](dev-test-trungnguyenhoang.vercel.app)
+- [dev-test-git-main-trungnguyenhoang.vercel.app](dev-test-git-main-trungnguyenhoang.vercel.app)
+- [dev-test-red.vercel.app](dev-test-red.vercel.app)
 
 There are two pages:
 1. `/`: Landing Page
