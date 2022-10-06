@@ -9,12 +9,21 @@ import { useAppState } from "store/store";
 
 const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
     // const { data: carData } = useGetCarInfoQuery()
-    const { isMobile } = useAppState()
+    const { isMobile, carState, priceRange, vehicleTypes } = useAppState()
     const idxToRenderAds = React.useMemo(() => {
         return isMobile ? 2 : 0
     }, [isMobile])
 
-    console.log('idxToRenderAds', idxToRenderAds)
+    const filteredCars = React.useMemo(() => {
+        // TODO: filter more based on car state and vehicle types
+        return carData.filter(car => {
+            if (priceRange === undefined) {
+                return true
+            }
+            return car.totalPrice && car.totalPrice >= priceRange.min && car.totalPrice <= priceRange.max
+        })
+    }, [priceRange, carData])
+
 
     return (
         <>
@@ -31,7 +40,7 @@ const CarList: React.FC<{ carData: CarInfo[] }> = ({ carData }) => {
     lg:grid-cols-3 xl:grid-cols-4
     xl:max-w-[1242px]
     ">
-                    <>{Array.from(new Array(carData.length)).map((_, idx) => {
+                    <>{Array.from(new Array(filteredCars.length + 1)).map((_, idx) => {
                         if (idx === idxToRenderAds) {
                             return <AdvertiseCard key={"advertise"} imageSrc={getCDNImage('car_ad.png')} />
                         }

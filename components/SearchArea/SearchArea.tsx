@@ -6,6 +6,9 @@ import { Popover } from '@mantine/core';
 import DollarSign from "components/icons/DollarSign";
 import UnstyledButton from "components/Common/UnstyledButton";
 import { formatCurrency } from "shared/utils";
+import { useAppDispatch } from "store/store";
+import { CarState } from "shared/types";
+import { setCarState, setPriceRange, setVehicleTypes } from "store/app.slice";
 
 const CarStateData: Record<string, string> = {
     ['new-authorised']: "New Car (Authorised Dealer)",
@@ -21,7 +24,7 @@ type Props = {
 
 type CarStateInputProps = {
     carState: string,
-    setCarState: (state: string) => void
+    setCarState: (state: CarState) => void
 }
 
 const CarStateInput: React.FC<CarStateInputProps> = ({ carState, setCarState }) => {
@@ -227,10 +230,10 @@ const VehicleTypeInput: React.FC<VehicleTypeInputProps> = ({ vehicleTypes, selec
 }
 
 const SearchArea: React.FC<Props> = ({ vehicleTypes }) => {
-    const [carState, setCarState] = React.useState('used')
-    const [priceRange, setPriceRange] = React.useState<{ min: number, max: number }>({ min: 10000, max: 100000 })
+    const [localCarState, localSetCarState] = React.useState<CarState>('used')
+    const [localPriceRange, localSetPriceRange] = React.useState<{ min: number, max: number }>({ min: 10000, max: 100000 })
     const [selectedVehicleTypes, setSelectedVehicleTypes] = React.useState<string[]>([])
-
+    const dispatch = useAppDispatch()
     return (
         <div className="md:relative md:flex md:justify-center">
             <div className="
@@ -247,13 +250,17 @@ const SearchArea: React.FC<Props> = ({ vehicleTypes }) => {
                 rounded-[6px]
                 bg-white
     ">
-                <CarStateInput carState={carState} setCarState={setCarState} />
-                <PriceRangeInput priceRange={priceRange} setPriceRange={setPriceRange} />
+                <CarStateInput carState={localCarState} setCarState={localSetCarState} />
+                <PriceRangeInput priceRange={localPriceRange} setPriceRange={localSetPriceRange} />
                 <VehicleTypeInput vehicleTypes={vehicleTypes} selectedVehicleTypes={selectedVehicleTypes} setSelectedVehicleTypes={setSelectedVehicleTypes} />
                 <UnstyledButton onClick={() => {
-                    console.log('New/Used: ', carState)
-                    console.log(`Price Range: ${priceRange.min} - ${priceRange.max}`)
+                    console.log('New/Used: ', localCarState)
+                    console.log(`Price Range: ${localPriceRange.min} - ${localPriceRange.max}`)
                     console.log(`Vehicle Type: ${selectedVehicleTypes}`)
+
+                    dispatch(setCarState(localCarState))
+                    dispatch(setPriceRange(localPriceRange))
+                    dispatch(setVehicleTypes(selectedVehicleTypes))
 
                 }} className="bg-carbuyer-primary text-white text-base leading-5 
             w-full md:w-auto

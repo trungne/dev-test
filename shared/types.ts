@@ -11,6 +11,8 @@ export type CarInfo = {
     photoURL: string,
 }
 
+export type CarState = 'used' | 'new-authorised' | 'new-parallel'
+
 export type FeaturedVehicle = {
     name: string,
     photoURL: string,
