@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
             <nav ref={parent} style={{
                 width: hideMenu ? 50 : 240,
                 minWidth: hideMenu ? 50 : 240
-            }} id='dashboard-menu' className="transition-all bg-[#323435] font-['Source_Sans_Pro'] min-h-screen max-w-[240px] px-4 py-6 flex flex-col">
+            }} id='dashboard-menu' className="transition-all bg-[#323435] font-['Source_Sans_Pro'] min-h-screen max-h-screen max-w-[240px] px-4 py-6 flex flex-col">
                 <div className="flex items-center justify-between min-h-[40px]">
                     {!hideMenu && <Link href="/" passHref>
                         <a>
