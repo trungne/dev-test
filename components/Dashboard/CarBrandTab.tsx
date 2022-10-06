@@ -10,6 +10,7 @@ import { useGetCarBrandsQuery } from "store/carapi.slice";
 import { setViewOption } from "store/dashboard.slice";
 import { useAppDispatch, useDashboardState } from "store/store";
 import CommonBrandDetail, { Mode } from "./CommonBrandDetail";
+import CommonTab from "./CommonTab";
 import styles from './style.module.css'
 
 const AddCarBrandModal: React.FC<{ opened: boolean, onClose: () => void }> = ({ opened, onClose }) => {
@@ -227,11 +228,11 @@ const CarBrandList: React.FC<{ viewCarBrand: (carBrand: CarBrand) => void }> = (
 const CarBrandTab: React.FC = () => {
     const [selectedCarBrand, setSelectedCarBrand] = React.useState<CarBrand>()
     return (
-        <div className="py-[30px] px-[42px] font-['Poppins']">
+        <CommonTab>
             {selectedCarBrand ? <CarBrandDetail back={() => setSelectedCarBrand(undefined)} brand={selectedCarBrand} /> :
                 <CarBrandList viewCarBrand={(brand) => setSelectedCarBrand(brand)} />
             }
-        </div>
+        </CommonTab>
     )
 }
 
