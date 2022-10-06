@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { AxiosBaseQueryResponse, CarBrand } from 'shared/types'
-import carBrandsJSON from 'server/car-brand.json'
 import fs from 'fs'
 import path from 'path'
 

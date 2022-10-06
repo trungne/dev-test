@@ -2,7 +2,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { AxiosBaseQueryResponse, CarBrand } from 'shared/types'
 import carBrandsJSON from 'server/car-brand.json'
-import fs from 'fs'
 export default function handler(
     req: NextApiRequest,
     res: NextApiResponse<AxiosBaseQueryResponse<CarBrand[]>>
