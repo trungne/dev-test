@@ -132,7 +132,7 @@ const Header: React.FC = () => {
                 <div className="pt-4 md:pt-[100px] pl-5 md:pl-[108px] text-white font-['Poppins']" >
                     <div className="font-semibold text-lg lg:text-[60px] lg:leading-[76px]">Car Marketplace</div>
                     <div className="font-medium w-[50%] 
-                    mt-1 md:mt-4
+                    mt-1 md:mt-4 md:mb-7
                     text-[6px] sm:text-sm lg:text-[18px] 
                     text-neutral-4">
                         <div>
@@ -145,7 +145,7 @@ const Header: React.FC = () => {
 
                     <UnstyledButton className="bg-carbuyer-primary font-['Poppins'] font-semibold text-white 
                     text-[10px] sm:text-sm md:text-[18px] 
-                    py-[6px] lg:py-3
+                    py-[6px] md:py-3 lg:py-4
                     px-4 md:px-12
                     mt-3 border-0 rounded">
                         Get Started
