@@ -46,4 +46,4 @@ There are two pages:
 - Sort brands list based on property (Last Update/Brand Name/Number of Models)
 - Search car brand
 - View details
-- **Only on local**: Add/Update brand. You can observe that the json file (`server/car-brand.json`) is updated when a new brand is updated or added. The reason this is not viable in production is Vercel only allow read access.
+- **Only on local**: Add/Update brand. You can observe that the json file (`server/car-brand.json`) is updated when a new brand is updated or added. The reason this is not viable in production is that Vercel only allows read access.
