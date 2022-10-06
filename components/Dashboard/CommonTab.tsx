@@ -5,7 +5,7 @@ type Props = {
 } & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 const CommonTab: React.FC<Props> = ({ children, ...rest }) => {
     return (
-        <div {...rest} className={clsx("py-[30px] px-[42px] font-['Poppins']", rest.className)}>
+        <div {...rest} className={clsx("py-2 px-4 md:py-[30px] md:px-[42px] font-['Poppins']", rest.className)}>
             {children}
         </div>
     )

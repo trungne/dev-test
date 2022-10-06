@@ -10,7 +10,7 @@ import Bell from "components/icons/Bell";
 import ChevronDown from "components/icons/ChevronDown";
 import CarBrandTab from "./CarBrandTab";
 import Link from "next/link";
-import { IconType } from "shared/types";
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Menu } from "components/Menu/type";
 import MenuButtonGroup from "components/Menu/MenuButtonGroup";
 import MenuButton from "components/Menu/MenuButton";
@@ -41,19 +41,22 @@ const SETTING_MENU: Menu = { name: 'Setting', value: 'setting', Icon: Setting }
 const Dashboard: React.FC = () => {
     const [currentTab, setCurrentTab] = React.useState<Menu['value']>('car-brand')
     const [hideMenu, setHideMenu] = React.useState(false)
+    const [parent] = useAutoAnimate<HTMLElement>()
+
     return (
         <div className="flex">
-            <nav style={{
-                width: hideMenu ? 100 : 240
-            }} id='dashboard-menu' className="transition-all bg-[#323435] font-['Source_Sans_Pro'] min-h-screen flex-1 max-w-[240px] px-4 py-6 flex flex-col">
-                <div className="flex items-center justify-between">
+            <nav ref={parent} style={{
+                width: hideMenu ? 50 : 240,
+                minWidth: hideMenu ? 50 : 240
+            }} id='dashboard-menu' className=" bg-[#323435] font-['Source_Sans_Pro'] min-h-screen max-w-[240px] px-4 py-6 flex flex-col">
+                <div className="flex items-center justify-between min-h-[40px]">
                     {!hideMenu && <Link href="/" passHref>
                         <a>
                             <UCarIcon className="cursor-pointer" width={102.91} height={28.07} />
                         </a>
                     </Link>}
                     <MenuIcon style={{
-                        ...(hideMenu && {margin: '0px auto'})
+                        ...(hideMenu && { margin: '0px auto' })
                     }} onClick={() => {
                         setHideMenu(prev => !prev)
                     }} className="cursor-pointer" />
