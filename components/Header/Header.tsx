@@ -54,25 +54,33 @@ Address.displayName = 'Address'
 const Menu: React.FC = React.memo(() => {
     return (
         <div className="flex bg-neutral py-5 justify-around">
-            <UCarIcon />
+            <Link href="/" passHref>
+                <a>
+                    <UCarIcon />
+                </a>
+            </Link>
+
             <nav className="flex items-center gap-12">
-                <Link href={'/new'} passHref>
+                <Link href={'/'} passHref>
                     <a className="bg-transparent text-base text-white cursor-pointer">New Cars</a>
                 </Link>
-                <Link href={'/used'} passHref>
+                <Link href={'/'} passHref>
                     <a className="bg-transparent text-base text-white cursor-pointer">Used Cars</a>
                 </Link>
-                <Link href={'/review'} passHref>
+                <Link href={'/'} passHref>
                     <a className="bg-transparent text-base text-white cursor-pointer">Review Cars</a>
                 </Link>
-                <Link href={'/news'} passHref>
+                <Link href={'/'} passHref>
                     <a className="bg-transparent text-base text-white cursor-pointer">News</a>
                 </Link>
             </nav>
 
             <UnstyledButton className="bg-carbuyer-primary font-semibold text-white 
                     text-base leading-5 py-3 px-16 rounded">
-                Login
+                <Link href="/">
+                    Login
+                </Link>
+
             </UnstyledButton>
         </div>
     )
